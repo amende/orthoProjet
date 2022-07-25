@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "header.html" %}
+</head>
+<body>
+  {% include "navbar.html" %}
+  {% include "errors.html" %}
+  <div class="ui two column centered grid" id="mainContainer">
+    <div class="ui center aligned segment" id="mainSegment">
+      <form class="ui form" action="signup" method="POST" id="mediumWidth">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="field">
+          <label>Nom d'utilisateur</label>
+          <span data-tooltip="At least 4 characters long" data-position="bottom center">
+          <input type="text" name="name" placeholder="Name">
+          </span>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="text" name="email" placeholder="Email">
+        </div>
+        <div class="field">
+          <label>Mot de passe</label>
+          <span data-tooltip="At least 8 characters long" data-position="bottom center">
+          <input type="password" name="password" placeholder="Password">
+        </span>
+        </div>
+        <!--
+        <div class="required field">
+          <div class="ui toggle checkbox">
+            <input type="checkbox" tabindex="0">
+            <label>I have read and agree to the <a href="tandc">Terms and Conditions</a></label>
+          </div>
+        </div>
+        -->
+        <button class="ui blue submit button" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+  {% include "footer.html" %}
+</body>
+</html>

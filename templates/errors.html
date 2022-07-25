@@ -1,0 +1,9 @@
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="ui compact info message" id="errorDisplay">
+  {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}

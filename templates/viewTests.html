@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "header.html" %}
+</head>
+
+<body>
+
+  {% include "navbar.html" %}
+  {% include "errors.html" %}
+
+
+  <div class="ui large header">Bonjour, {{current_user.name}}</div>
+  <div class="ui large header">ici bientot la liste des tests dispo</div>
+  {% include "footer.html" %}
+</body>
+</html>

@@ -1,0 +1,5 @@
+<link nonce="{{ csp_nonce() }}" rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/semantic.css') }}">
+<link nonce="{{ csp_nonce() }}" rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='customStyles/main.css') }}">
+<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+<script nonce="{{ csp_nonce() }}" src="{{ url_for('static', filename='js/jQuery.js') }}"></script>
+<title>100mots</title>

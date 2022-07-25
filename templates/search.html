@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "header.html" %}
+</head>
+<body>
+  {% include "navbar.html" %}
+  {% include "errors.html" %}
+
+  <div class="ui two column centered grid" id="mainContainer">
+    <div class="ui center aligned segment" id="SearchSegment">
+      <form class="ui form" action="/searchStamp" method='POST'>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="equal width fields">
+          <div class="field">
+            <label>Minimum year</label>
+            <input name="min_year" type="text" placeholder="Min. Year">
+          </div>
+          <div class="field">
+            <label>Maximum year</label>
+            <input name="max_year" type="text" placeholder="Max. Year">
+          </div>
+          <div class="field">
+            <label>Name contains</label>
+            <input name="name" type="text" placeholder="Name contains">
+          </div>
+          </div>
+          <div class="ui horizontal divider">
+          <button class="ui orange submit button" type="submit">Search</button>
+          </div>
+      </form>
+
+      <div class="ui divided items">
+
+        {% for (stamp,owner) in stamps %}
+        <div class="link item">
+          <div class="ui tiny image">
+            <img src="{{ url_for('static', filename=stamp.fileName) }}">
+          </div>
+          <div class="content">
+            <a class="header">{{ stamp.name }}</a>
+            <div class="description">
+              Printed in {{ stamp.year }}
+              <br/>
+              Owned by {{owner}}
+            </div>
+          </div>
+          <div class="content">
+            {% if stamp.owner!=current_user.id %}
+              <a href="{{ '/exchange?wanted='+ stamp.id|string}}">
+                <span data-tooltip="Send exchange proposition" data-position="bottom center">
+                  <i class="plus square icon"></i>
+                </span>
+              </a>
+              {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  {% include "footer.html" %}
+</body>
+</html>

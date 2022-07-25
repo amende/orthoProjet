@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "header.html" %}
+</head>
+<body>
+  {% include "navbar.html" %}
+  {% include "errors.html" %}
+
+  <div class="ui two column centered grid" id="mainContainer">
+    <div class="ui center aligned segment" id="mainSegment">
+      <div class="ui divided items">
+
+        {% for stamp in stamps %}
+        <div class="link item">
+          <div class="ui tiny image">
+            <img src="{{ url_for('static', filename=stamp.fileName) }}">
+          </div>
+          <div class="content">
+            <a class="header">{{ stamp.name }}</a>
+            <div class="description">
+              Printed in {{ stamp.year }}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="row">
+        <a href="/addStamp"><button class="ui teal button">
+          <i class="add icon"></i>
+          Add a stamp
+        </button></a>
+      </div>
+    </div>
+  </div>
+  {% include "footer.html" %}
+</body>
+</html>

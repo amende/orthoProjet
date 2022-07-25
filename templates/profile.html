@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "header.html" %}
+</head>
+<body>
+  {% include "navbar.html" %}
+  {% include "errors.html" %}
+  <div class="ui two column centered grid" id="mainContainer">
+    <div class="ui center aligned segment" id="mainSegment">
+      <div class="ui large header">Bonjour, {{current_user.name}}</div>
+      <br/>
+      <div class="ui horizontal divider">Vous avez :</div>
+      <br/>
+        <div class="ui statistic">
+          <div class="label">
+            Tests effectués
+          </div>
+          <div class="value">
+            {{stampsUploaded}} <!-- remplacer ici avec une variable de test fait-->
+          </div>
+        </div>
+        <!--
+        <div class="ui statistic">
+          <div class="label">
+            Stamps exchanged
+          </div>
+          <div class="value">
+            {{stampsExchanged}}
+          </div>
+        </div>
+        <div class="ui statistic">
+          <div class="label">
+            Reputation points
+          </div>
+          <div class="value">
+            26
+          </div>
+        </div>
+      -->
+        <br/>
+        <br/>
+        <div class="ui horizontal divider">Selectionner mon test :</div>
+        <a href="/ViewTests"><button class="ui submit button">Voir les tests</button></a>
+        <div class="ui horizontal divider">Modifier le profil :</div>
+      </br>
+        <p id="leftAligned"> Note : laisser vide pour ne pas modifier</p>
+        <form class="ui form" action="editProfile" method="POST"id="mediumWidth">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          <div class="field">
+            <label>Nom d'utilisateur</label>
+            <input type="text" name="name" placeholder="{{current_user.name}}">
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="text" name="email" placeholder="{{current_user.email}}">
+          </div>
+          <div class="field">
+            <label>Mot de passe</label>
+            <input type="password" name="password" placeholder="Password">
+          </div>
+          <button class="ui gray submit button" type="submit">Modifier</button>
+        </form>
+        <br/>
+        <div class="ui horizontal divider">Le gros bouton rouge</div>
+        <a href="/deleteProfile">
+          <div class="ui animated fade negative button">
+            <div class="visible content">Supprimer mon profil</div>
+            <div class="hidden content">
+              C'est sûr ?
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    {% include "footer.html" %}
+  </body>
+  </html>

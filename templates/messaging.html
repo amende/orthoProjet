@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "header.html" %}
+  <script nonce="{{ csp_nonce() }}" src="{{ url_for('static', filename='styles/components/accordion.js') }}"></script>
+</head>
+<body>
+  <script nonce="{{ csp_nonce() }}" language='javascript'>
+  $(document).ready(function(){$('.ui.accordion').accordion();});
+  </script>
+
+  {% include "navbar.html" %}
+  {% include "errors.html" %}
+  <div class="ui two column centered grid" id="mainContainer">
+    <div class="ui center aligned segment" id="mainSegment">
+      <div class="ui internally celled grid">
+        <div class="row">
+          <div class="eight wide column">
+            <h1>
+              Send message
+            </h1>
+            <form class="ui form" action="/messaging" method='POST' id="mediumWidth">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+              <div class="field">
+                <label>Username of receiver</label>
+                <input type="text" name="receiver" placeholder="Receiver">
+              </div>
+              <div class="field">
+                <label>Content of message</label>
+                <label>(140 characters max.)</label>
+                <textarea type="text" name="content" placeholder="Content"></textarea>
+              </div>
+              <input type="hidden" name="action" value="postMessage"></input>
+              <button class="ui blue submit button" type="submit"><i class="paper plane icon"></i>Send message</button>
+            </form>
+          </div>
+          <div class="eight wide column">
+
+            <h1>
+              Messages received
+            </h1>
+
+
+            <div class="ui styled fluid accordion">
+              <div class="active title">
+                <i class="dropdown icon"></i>
+                New messages
+              </div>
+              <div class="active content">
+                <div class="ui feed">
+                  {% for message in messages %}
+                  {% if message.seen == "No" and message.sender_id != current_user.id %}
+                  <div class="event">
+                    <div class="label">
+                      <i class="pencil icon"></i>
+                    </div>
+                    <div class="content">
+                      <div class="summary">
+                        <a class="user">
+                          {{ message["sender"] }} à {{ message["receiver"] }} :
+                        </a>
+                        <div class="date">
+                          {{ message["date"] }}
+                        </div>
+                        <br/>
+                        <td>{{ message["content"] }}</td>
+                      </div>
+                    </div>
+                  </div>
+                  <td></td>
+                  {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+
+
+              <div class="title">
+                <i class="dropdown icon"></i>
+                Seen messages
+              </div>
+              <div class="content">
+                <div class="ui feed">
+                  {% for message in messages %}
+                  {% if message.seen == "Yes" or message.sender_id == current_user.id %}
+                  <div class="event">
+                    <div class="label">
+                      <i class="pencil icon"></i>
+                    </div>
+                    <div class="content">
+                      <div class="summary">
+                        <a class="user">
+                          {{ message["sender"] }} à {{ message["receiver"] }} :
+                        </a>
+                        <div class="date">
+                          {{ message["date"] }}
+                        </div>
+                        <br/>
+                        <td>{{ message["content"] }}</td>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            <br></br>
+            <form action="/messaging" method='POST'>
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+              <input type="hidden" name="action" value="refresh"></input>
+              <button class="ui orange submit button" type="submit"><i class="retweet icon"></i>Refresh</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include "footer.html" %}
+</body>
+</html>

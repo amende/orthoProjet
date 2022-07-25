@@ -1,0 +1,45 @@
+<div id="navbarContainer">
+  <div id="navbar">
+    <div class="ui fixed inverted main menu">
+      <a class="item" href="/">
+        <img src="{{ url_for('static',filename='images/logo.png') }}" id="logo">
+      </a>
+      {% if current_user.is_anonymous %}
+      <a class="item" href="/login">
+        Se connecter
+      </a>
+      <a class="item" href="/signup">
+        S'inscrire
+      </a>
+      {% else %}
+      <a class="item" href="/profile">
+        Profil
+      </a>
+      <a class="item" href="/MakeTest">
+        Faire le test
+      </a>
+              <!--
+
+      <a class="item" href="/myCollec">
+        Mes 100 mots
+      </a>
+      <a class="item" href="/searchStamp">
+        Search
+      </a>
+      <a class="item" href="/exchange">
+        Exchange
+      </a>
+      <a class="item" href="/messaging">
+        Messaging
+        {% set mn = get_message_number() %}
+        {% if mn>0 %}
+        <div class="ui mini red circular label">{{ mn }}</div>
+        {% endif %}
+      </a>
+    -->
+      <a class="item" href="/logout">
+        Déconnexion
+      </a>
+      {% endif %}
+    </div>
+  </div>

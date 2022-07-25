@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "header.html" %}
+</head>
+
+<body>
+
+  {% include "navbar.html" %}
+  {% include "errors.html" %}
+  <div class="ui two column centered grid" id="mainContainer">
+    <div class="ui large message">
+      <h1 class="ui huge header">Les 100 mots quotidiens</h1>
+      <p>Vous pouvez ici remplir les différents test proposés par notre orthophoniste en herbe</p>
+
+      {% if not current_user.is_authenticated %}
+      <div class="ui buttons">
+        <a href="/login">
+          <div class="ui blue button">Se connecter</div>
+        </a>
+        
+        <a href="/signup">
+          <div class="ui positive button">Créer son compte</div>
+        </a>
+      </div>
+      {% else %}
+      <a href="/MakeTest">
+        <div class="ui orange button">Faire mon test</div>
+      </a>
+      {% endif %}
+
+      <br/>
+      <br/>
+      <h3 class="ui header" id="leftAligned">Une super ortho :</h3>
+      <div class="ui horizontal statistics">
+        <div class="statistic">
+          <div class="value">
+            <i class="trophy icon"></i>
+            22
+          </div>
+          <div class="label">
+            Stages validés
+          </div>
+        </div>
+        <div class="statistic">
+          <div class="value">
+            <i class="ticket icon"></i>
+           {{stampCount}}
+          </div>
+          <div class="label">
+            Patients sur ce site
+          </div>
+        </div>
+        <div class="statistic">
+          <div class="value">
+            <i class="protect icon"></i>
+            81
+          </div>
+          <div class="label">
+            patients soignés
+          </div>
+        </div>
+      </div>
+      attention,<br/>ce site bug tout le temps
+      <div class="ui segment">
+        <div class="ui active inverted dimmer">
+          <div class="ui large text loader">
+            Loading
+          </div>
+        </div>
+        <br><br>
+        <br><br>
+        <br><br>
+      </div>
+      <br/>
+      ça tourne hein ?
+    </div>
+  </div>
+
+  {% include "footer.html" %}
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<div class="ui vertical footer segment" id="footer">
+    <div id="footerLeftAligned">
+    Ortho@2022
+    </div>
+    <div id="footerRightAligned">
+    Made with love<i class="heart icon"></i> By G.Michard
+    </div>
+</div>
+<script nonce="{{ csp_nonce() }}" src="{{ url_for('static', filename='styles/components/transition.js') }}"></script>
+<script nonce="{{ csp_nonce() }}">
+  $(document).ready(function() {
+      $('.heart.icon').hover(function(){
+          $(this).transition('bounce');
+      }, function(){});
+  });
+</script>
+</div>

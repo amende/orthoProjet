@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "header.html" %}
+</head>
+<body>
+  {% include "navbar.html" %}
+  {% include "errors.html" %}
+  <div class="ui two column centered grid" id="mainContainer">
+    <div class="ui center aligned segment" id="mainSegment">
+      <form class="ui form" action="/login" method='POST' id="mediumWidth">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="field">
+          <label>Email</label>
+          <input type="text" name="email" placeholder="Email">
+        </div>
+        <div class="field">
+          <label>Mot de passe</label>
+          <input type="password" name="password" placeholder="Password">
+        </div>
+        <button class="ui blue submit button" type="submit">Connexion</button>
+      </form>
+    </div>
+  </div>
+  {% include "footer.html" %}
+</body>
+</html>
