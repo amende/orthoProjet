@@ -8,14 +8,13 @@
 
   {% include "navbar.html" %}
   {% include "errors.html" %}
-
-
-  <div class="ui large header">Bonjour, {{current_user.name}},{{strFiles}}
-  </div>
-  <form class="ui form" action="/testing" method='POST'>
+ <p>fichiers : {{strFiles}} , nextPage: {{nextPage}}, </p>
+ <img src="{{ url_for('static', filename=imageTest)}}">
+  <div class="ui large header">Bonjour, {{current_user.name}}</div>
+  <form class="ui form" action={{nextPage}} method='POST'>
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-    <input type="hidden" name="strFiles" value={{strFiles}}/>
-      <button class="ui submit red button" type="submit">commencer !</button>
+    <input type="hidden" name="strFiles" value={{ strFiles }}/>
+      <button class="ui submit red button" type="submit">suivant !</button>
   <!-- fichiers : {{filenames}} , liste images restantes: {{listIndexImg}}, longueur restante : {{lenTest}}
   <div class="ui two column centered grid" id="mainContainer">
     <div class="ui center aligned segment" id="mainSegment">

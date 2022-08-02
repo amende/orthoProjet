@@ -229,10 +229,31 @@ def login_post():
 
 
 
-@app.route('/MakeTest')
+@app.route('/MakeTest')   ### cette page prépare le test : nombre d'images, prise au hasard des images
 def makeTest():
     filenames = ['images/tests/premierTest/' + f for f in listdir("./static/images/tests/premierTest") if isfile(join("./static/images/tests/premierTest", f))]
-    return (render_template('makeTest.html',filenames=filenames))
+    random.shuffle(filenames)
+    strFiles=''
+    for k in filenames:
+        strFiles+=k
+        strFiles+="::"
+    return (render_template('makeTest.html',strFiles=strFiles))
+
+@app.route('/testing', methods=['POST'])
+def testing():
+    strFiles = request.form.get('strFiles')
+    filenames =strFiles.split("::")
+    nextPage="/testing"
+    if len(filenames)==2:
+        nextPage="/endTest"
+    if filenames[-1]=="/":
+        filenames.pop()
+    imageTest=filenames.pop()
+    strFiles=""
+    for k in filenames:
+        strFiles+=k
+        strFiles+="::"
+    return(render_template('testing.html', imageTest=imageTest,strFiles=strFiles, nextPage=nextPage))
 
 
 @app.route('/ViewTests')
