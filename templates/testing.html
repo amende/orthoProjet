@@ -8,31 +8,39 @@
 
   {% include "navbar.html" %}
   {% include "errors.html" %}
- <p>fichiers : {{strFiles}} , nextPage: {{nextPage}}, </p>
- <img src="{{ url_for('static', filename=imageTest)}}">
-  <div class="ui large header">Bonjour, {{current_user.name}}</div>
-  <form class="ui form" action={{nextPage}} method='POST'>
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-    <input type="hidden" name="strFiles" value={{ strFiles }}/>
-      <button class="ui submit red button" type="submit">suivant !</button>
-  <!-- fichiers : {{filenames}} , liste images restantes: {{listIndexImg}}, longueur restante : {{lenTest}}
-  <div class="ui two column centered grid" id="mainContainer">
-    <div class="ui center aligned segment" id="mainSegment">
-      <div class="ui divided items">
+  <div class="ui center aligned segment" id="mainSegment">
+    <p>fichiers : {{strFiles}} , nextPage: {{nextPage}}, resultat={{testResult}}</p>
+    
+      <div class="ui large header"> Que représente cette image ?</div>
+      <img src="{{ url_for('static', filename=imageTest)}}" width="500">
+      <form class="ui form" action={{nextPage}} method='POST'>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="hidden" name="strFiles" value={{ strFiles }}/>
+        <div class="ui two column centered grid" id="mainContainer">
+          <button class="ui submit green button" name='action' value="correct" type="submit">Bonne réponse !</button>
+          <button class="ui submit red button" name='action' value= "faux" type="submit"> mauvaise réponse</button>
+        </div>
+      <!-- fichiers : {{filenames}} , liste images restantes: {{listIndexImg}}, longueur restante : {{lenTest}}
+      <div class="ui two column centered grid" id="mainContainer">
+        <div class="ui center aligned segment" id="mainSegment">
+          <div class="ui divided items">
 
-        {% for file in filenames %}
-        <div class="link item">
-          <div class="ui tiny image">
-            <img src="{{ url_for('static', filename=file) }}">
-          </div>
-          <div class="content">
-            <a class="header">{{ file }}</a>
+            {% for file in filenames %}
+            <div class="link item">
+              <div class="ui tiny image">
+                <img src="{{ url_for('static', filename=file) }}">
+              </div>
+              <div class="content">
+                <a class="header">{{ file }}</a>
+              </div>
+            </div>
+            {% endfor %}
           </div>
         </div>
-        {% endfor %}
-      </div>
+        -->
     </div>
-    -->
   </div>  {% include "footer.html" %}
 </body>
+
+
 </html>

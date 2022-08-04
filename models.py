@@ -13,7 +13,14 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(100), unique=True)
 
 
-
+class TestResult(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    owner = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
+    images = db.Column(db.String(15000), unique= False)
+    result = db.Column(db.String(101), unique=False)
+    time = db.Column(db.DateTime)
+    testSent = db.Column(db.Boolean)
+    
 
 
 ###########################"" code des timbres ###################################""

@@ -12,7 +12,7 @@ import os
 import datetime
 
 # local files:
-from models import User, Stamp, db, Message, Exchange
+from models import User, Stamp, Exchange, Message, TestResult, db
 
 
 # Load environment variables
@@ -230,6 +230,7 @@ def login_post():
 
 
 @app.route('/MakeTest')   ### cette page prépare le test : nombre d'images, prise au hasard des images
+@login_required
 def makeTest():
     filenames = ['images/tests/premierTest/' + f for f in listdir("./static/images/tests/premierTest") if isfile(join("./static/images/tests/premierTest", f))]
     random.shuffle(filenames)
@@ -237,11 +238,30 @@ def makeTest():
     for k in filenames:
         strFiles+=k
         strFiles+="::"
+    user=current_user
+    new_test = TestResult(images=strFiles, owner = user.id,result=""
+                        )
+    db.session.add(new_test)
+    db.session.commit()
     return (render_template('makeTest.html',strFiles=strFiles))
 
 @app.route('/testing', methods=['POST'])
+@login_required
 def testing():
     strFiles = request.form.get('strFiles')
+    if request.form.get("action"):
+        user = current_user
+        testResult= TestResult.query.filter_by(owner=user.id).first()
+        if request.form.get("action")=="correct":
+            #ici ajouter un 1 au test result 
+            testResult.result=str(testResult.result)+"1"
+        else:
+            #et ici un 0
+            testResult.result=str(testResult.result)+"0"
+    else:
+        #lancer un chrono
+        chrono=0
+    db.session.commit()
     filenames =strFiles.split("::")
     nextPage="/testing"
     if len(filenames)==2:
@@ -253,10 +273,23 @@ def testing():
     for k in filenames:
         strFiles+=k
         strFiles+="::"
-    return(render_template('testing.html', imageTest=imageTest,strFiles=strFiles, nextPage=nextPage))
+    return(render_template('testing.html', imageTest=imageTest,strFiles=strFiles, nextPage=nextPage,testResult=testResult.result))
+
+
+@app.route('/endTest')
+@login_required
+def endTest():
+    #finir le chrono
+    #envoyer les résultats
+    #supprimer le test de la base de données
+    #dire merci et bonne journée
+    #proposer un retour vers le profil
+    return (render_template('viewTests.html'))
+
 
 
 @app.route('/ViewTests')
+@login_required
 def viewTests():
     return (render_template('viewTests.html'))
 
