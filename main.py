@@ -258,9 +258,11 @@ def testing():
         else:
             #et ici un 0
             testResult.result=str(testResult.result)+"0"
+        result=testResult.result
     else:
         #lancer un chrono
-        chrono=0
+        testResult.time=datetime.datetime.now()
+        result=""
     db.session.commit()
     filenames =strFiles.split("::")
     nextPage="/testing"
@@ -273,13 +275,16 @@ def testing():
     for k in filenames:
         strFiles+=k
         strFiles+="::"
-    return(render_template('testing.html', imageTest=imageTest,strFiles=strFiles, nextPage=nextPage,testResult=testResult.result))
+    return(render_template('testing.html', imageTest=imageTest,strFiles=strFiles, nextPage=nextPage,result=result))
 
 
-@app.route('/endTest')
+@app.route('/endTest', methods=['POST'])
 @login_required
 def endTest():
     #finir le chrono
+    testResult= TestResult.query.filter_by(owner=user.id).first()
+    seconds = (datetime.datetime.now()-testResult.time).total_seconds()
+    totalTime=str(datetime.timedelta(seconds = seconds))
     #envoyer les résultats
     #supprimer le test de la base de données
     #dire merci et bonne journée
