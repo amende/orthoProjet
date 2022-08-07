@@ -129,7 +129,7 @@ def signup_post():
             return(redirect(url_for('signup')))
 
         new_user = User(email=email, name=name,
-                        password=bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()))
+                        password=bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()),testFolder="premierTest")
         db.session.add(new_user)
         db.session.commit()
         flash("Account has been created, now please login.")
@@ -234,9 +234,10 @@ def login_post():
 def makeTest():
     #si c'est un refresh, refaire un test
     user=current_user
+    userTestFolder=user.testFolder
     TestResult.query.filter_by(owner=user.id).delete()
     db.session.commit()
-    filenames = ['images/tests/premierTest/' + f for f in listdir("./static/images/tests/premierTest") if isfile(join("./static/images/tests/premierTest", f))]
+    filenames = ['images/tests/' + userTestFolder +"/" + f for f in listdir("./static/images/tests/"+userTestFolder) if isfile(join("./static/images/tests/"+userTestFolder, f))]
     random.shuffle(filenames)
     strFiles=''
     for k in filenames:
@@ -290,6 +291,7 @@ def testing():
 @login_required
 def endTest():
     #finir le chrono
+    userTestFolder=current_user.testFolder # à modifier en fonction du folder choisi par l'utilisateur
     user=current_user
     testResult= TestResult.query.filter_by(owner=user.id).first()
     if request.form.get("action")=="correct":
@@ -319,7 +321,7 @@ def endTest():
     listeImages.remove("")
     mesImages=[]
     for k in listeImages:
-        mesImages.append(str(k).removeprefix("images/tests/premierTest"))
+        mesImages.append(str(k).removeprefix("images/tests/" + userTestFolder))
     listeResultats=list(str(testResult.result))
 
     listeDuo=[]
@@ -338,11 +340,24 @@ def endTest():
 @app.route('/ViewTests')
 @login_required
 def viewTests():
-    return (render_template('viewTests.html'))
+    #lister les répertoires:[x[0] for x in os.walk(os.getcwd())] 
+    links=[x[0] for x in os.walk("./static/images/tests/")]
+    folderList=[]
+    for k in links:
+        folderList.append(k.removeprefix("./static/images/tests/"))
+    folderList.remove("")
+    return (render_template('viewTests.html', folderList=folderList))
 
 
 
-
+@app.route('/SetTest',methods=['POST'])
+@login_required
+def setTest():
+    folder=request.form.get("folder")
+    user=current_user
+    user.testFolder=folder
+    db.session.commit()
+    return redirect(url_for("profile"))
 
 
 

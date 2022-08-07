@@ -1,6 +1,12 @@
-# DesTimbres
+# 100mots
 
-This project is about exchanging awesome stamps !
+faire des tests pour les patients atteints d'Alzheimer, évaluer la conservation d'un microlexique
+
+# To Do généraux:
+
+finir l'envoi de mail (ou bien une autre façon d'envoyer les données à l'examinateur)
+mettre une fonctionnalité de création de test par un utilisateur
+permettre au patient de choisir son test
 
 ## Start App
 

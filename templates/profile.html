@@ -40,8 +40,14 @@
       -->
         <br/>
         <br/>
+        <!-- ici il faudra rajouter un test conditionnel, si l'utilisateur a déjà choisi son test-->
+        {% if current_user.testFolder=="premierTest" %}
         <div class="ui horizontal divider">Selectionner mon test :</div>
         <a href="/ViewTests"><button class="ui submit button">Voir les tests</button></a>
+        {% else %}
+        <div class="ui horizontal divider">Faire mon test :</div>
+        <a href="/ViewTests"><button class="ui submit button">me tester</button></a>
+        {% endif %}
         <div class="ui horizontal divider">Modifier le profil :</div>
       </br>
         <p id="leftAligned"> Note : laisser vide pour ne pas modifier</p>
