@@ -10,6 +10,7 @@ import random
 import string
 import os
 import datetime
+import smtplib, ssl
 
 # local files:
 from models import User, Stamp, Exchange, Message, TestResult, db
@@ -37,7 +38,6 @@ csp = {
     'font-src': '\'self\' data: fonts.gstatic.com/',
 }
 Talisman(app, content_security_policy=csp, content_security_policy_nonce_in=['style-src', 'script-src'])
-
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -232,38 +232,46 @@ def login_post():
 @app.route('/MakeTest')   ### cette page prépare le test : nombre d'images, prise au hasard des images
 @login_required
 def makeTest():
+    #si c'est un refresh, refaire un test
+    user=current_user
+    TestResult.query.filter_by(owner=user.id).delete()
+    db.session.commit()
     filenames = ['images/tests/premierTest/' + f for f in listdir("./static/images/tests/premierTest") if isfile(join("./static/images/tests/premierTest", f))]
     random.shuffle(filenames)
     strFiles=''
     for k in filenames:
         strFiles+=k
         strFiles+="::"
-    user=current_user
-    new_test = TestResult(images=strFiles, owner = user.id,result=""
+    
+    new_test = TestResult(images=strFiles, owner = user.id,result="",testSent=False
                         )
     db.session.add(new_test)
     db.session.commit()
-    return (render_template('makeTest.html',strFiles=strFiles))
+    ##test
+    testResult=TestResult.query.filter_by(owner=user.id).first()
+    images=testResult.images
+    return (render_template('makeTest.html',strFiles=strFiles,images=images))
 
 @app.route('/testing', methods=['POST'])
 @login_required
 def testing():
-    strFiles = request.form.get('strFiles')
+    user = current_user
+    testResult= TestResult.query.filter_by(owner=user.id).first()
+    strFiles = request.form.get("strFiles")
     if request.form.get("action"):
-        user = current_user
-        testResult= TestResult.query.filter_by(owner=user.id).first()
         if request.form.get("action")=="correct":
             #ici ajouter un 1 au test result 
-            testResult.result=str(testResult.result)+"1"
+            testResult.result="1"+str(testResult.result)
         else:
             #et ici un 0
-            testResult.result=str(testResult.result)+"0"
+            testResult.result="0"+str(testResult.result)
         result=testResult.result
     else:
         #lancer un chrono
         testResult.time=datetime.datetime.now()
         result=""
     db.session.commit()
+    chrono=testResult.time
     filenames =strFiles.split("::")
     nextPage="/testing"
     if len(filenames)==2:
@@ -275,21 +283,55 @@ def testing():
     for k in filenames:
         strFiles+=k
         strFiles+="::"
-    return(render_template('testing.html', imageTest=imageTest,strFiles=strFiles, nextPage=nextPage,result=result))
+    return(render_template('testing.html', imageTest=imageTest,strFiles=strFiles, nextPage=nextPage,result=result,chrono=chrono))
 
 
 @app.route('/endTest', methods=['POST'])
 @login_required
 def endTest():
     #finir le chrono
+    user=current_user
     testResult= TestResult.query.filter_by(owner=user.id).first()
+    if request.form.get("action")=="correct":
+        #ici ajouter un 1 au test result 
+        testResult.result="1"+str(testResult.result)
+    else:
+        #et ici un 0
+        testResult.result="0"+str(testResult.result)
     seconds = (datetime.datetime.now()-testResult.time).total_seconds()
     totalTime=str(datetime.timedelta(seconds = seconds))
-    #envoyer les résultats
+    #
+    """
+    #envoyer les résultats par mail :##########################
+    port = 465  # For SSL
+    emailPassword = "memoire67ortho"
+    sender_email = "memoireortho67@gmail.com"  # Enter your address
+    receiver_email = "memoireortho67@gmail.com"  # Enter receiver address
+    message = 
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+        server.login(sender_email, emailPassword)
+        server.sendmail(sender_email, receiver_email, message)
+
+    ###############################"""
+    listeImages=str(testResult.images).split("::")
+    listeImages.remove("")
+    mesImages=[]
+    for k in listeImages:
+        mesImages.append(str(k).removeprefix("images/tests/premierTest"))
+    listeResultats=list(str(testResult.result))
+
+    listeDuo=[]
+    for k in range(len(listeImages)):
+        listeDuo.append((mesImages[k],listeResultats[k]))
+
     #supprimer le test de la base de données
+    TestResult.query.filter_by(id=testResult.id).delete()
+    db.session.commit()
     #dire merci et bonne journée
     #proposer un retour vers le profil
-    return (render_template('viewTests.html'))
+    return (render_template('endTest.html',listeDuo=listeDuo,totalTime=totalTime))
 
 
 
