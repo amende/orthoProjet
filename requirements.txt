@@ -5,5 +5,3 @@ python-dotenv
 bcrypt
 flask_wtf
 flask_talisman
-smtplib
-ssl
