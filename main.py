@@ -10,7 +10,7 @@ import random
 import string
 import os
 import datetime
-import smtplib, ssl
+#import smtplib, ssl
 
 # local files:
 from models import User, Stamp, Exchange, Message, TestResult, db
