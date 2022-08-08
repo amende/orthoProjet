@@ -25,6 +25,9 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv("secret_key")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("db_uri")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['ADMIN_NAME']=os.getenv("ADMIN_NAME")
+app.config['ADMIN_PASSWORD']=os.getenv("ADMIN_PASSWORD")
+
 
 # gestion des upload images des timbres
 app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER')
@@ -56,16 +59,20 @@ def protect_response(response):
 # Database initialisation
 db.init_app(app)
 
-# CSRF protection
-csrf = CSRFProtect()
-csrf.init_app(app)
-
-
 # Just for easier debug
 if os.getenv("debug"):
     with app.app_context():
         # db.drop_all()
         db.create_all()
+    
+
+
+# CSRF protection
+csrf = CSRFProtect()
+csrf.init_app(app)
+
+
+
 
 
 # Login manager initialisation
@@ -94,6 +101,11 @@ def profile():
 
 @app.route('/signup')
 def signup():
+    if (User.query.filter_by(isAdmin=True).count()==0):
+        admin = User(email="admin@admin", name=app.config['ADMIN_NAME'],
+                                    password=bcrypt.hashpw(app.config['ADMIN_PASSWORD'].encode('utf-8'), bcrypt.gensalt()),testFolder="premierTest",isAdmin=True)
+        db.session.add(admin)                       
+        db.session.commit()
     if current_user.is_authenticated:
         flash('You are already registered and signed in')
         return(redirect(url_for('profile')))
@@ -129,7 +141,7 @@ def signup_post():
             return(redirect(url_for('signup')))
 
         new_user = User(email=email, name=name,
-                        password=bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()),testFolder="premierTest")
+                        password=bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()),testFolder="premierTest",isAdmin=False)
         db.session.add(new_user)
         db.session.commit()
         flash("Account has been created, now please login.")
@@ -235,7 +247,7 @@ def makeTest():
     #si c'est un refresh, refaire un test
     user=current_user
     userTestFolder=user.testFolder
-    TestResult.query.filter_by(owner=user.id).delete()
+    TestResult.query.filter_by(owner=user.id,testSent=False).delete()
     db.session.commit()
     filenames = ['images/tests/' + userTestFolder +"/" + f for f in listdir("./static/images/tests/"+userTestFolder) if isfile(join("./static/images/tests/"+userTestFolder, f))]
     random.shuffle(filenames)
@@ -329,7 +341,7 @@ def endTest():
         listeDuo.append((mesImages[k],listeResultats[k]))
 
     #supprimer le test de la base de données
-    TestResult.query.filter_by(id=testResult.id).delete()
+    TestResult.testSent=True
     db.session.commit()
     #dire merci et bonne journée
     #proposer un retour vers le profil
@@ -362,7 +374,26 @@ def setTest():
 
 
 
+######les taches de l'admin :
 
+
+
+@app.route('/CreateTest')
+@login_required
+def createTest():
+    return redirect(url_for("profile"))
+
+
+@app.route('/CreateTest', methods=['POST'])
+@login_required
+def createTest():
+    return redirect(url_for("profile"))
+
+
+@app.route('/ViewResults')
+@login_required
+def viewResults():
+    return redirect(url_for("profile"))
 
 ########################################################################################################################################################
 

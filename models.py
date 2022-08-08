@@ -12,6 +12,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(100), unique=True)
     testFolder = db.Column(db.String(100))
+    isAdmin = db.Column(db.Boolean)
 
 
 class TestResult(db.Model):

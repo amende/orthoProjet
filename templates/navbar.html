@@ -15,15 +15,31 @@
       <a class="item" href="/profile">
         Profil
       </a>
-      {% if not current_user.testFolder=="premierTest" %}
-      <a class="item" href="/MakeTest">
-        Faire le test
-      </a>
+      {% if not current_user.isAdmin %}
+        {% if not current_user.testFolder=="premierTest" %}
+        <a class="item" href="/MakeTest">
+          Faire le test
+        </a>
+        {% else %}
+        <a class="item" href="/ViewTests">
+          Selectionner mon test
+        </a>
+        {% endif %}
       {% else %}
       <a class="item" href="/ViewTests">
         Selectionner mon test
       </a>
+      <a class="item" href="/MakeTest">
+        Faire le test
+      </a>
+      <a class="item" href="/CreateTest">
+        Créer un test
+      </a>
+      <a class="item" href="/ViewResults">
+        voir les résultats
+      </a>
       {% endif %}
+
               <!--
 
       <a class="item" href="/myCollec">
