@@ -381,7 +381,7 @@ def setTest():
 @app.route('/CreateTest')
 @login_required
 def createTest():
-    return redirect(url_for("profile"))
+    return (render_template('createTest.html'))
 
 
 @app.route('/CreateTest', methods=['POST'])
@@ -395,6 +395,12 @@ def createTest():
 def viewResults():
     return redirect(url_for("profile"))
 
+    
+
+@app.route('/addImages')
+@login_required
+def addImages():
+    return redirect(url_for("profile"))
 ########################################################################################################################################################
 
 #ancien code !!!!
