@@ -12,6 +12,24 @@
 
   <div class="ui large header">Bonjour, {{current_user.name}}</div>
   <div class="ui large header">ici bientot la selection des images pour un test<br>
+    <form method="post" enctype="multipart/form-data" action="/CreateTest" >
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <p>
+        <label for="uploads">
+          Choisissez les images que vous voulez télécharger :
+        </label>
+        <input type="file" id="uploads" name="uploads" accept=".jpg, .jpeg, .png, .svg, .gif" multiple>
+      </p>
+      <p>
+        <label for="uploads">
+          Choisir le nom de votre test :
+        </label>
+        <input type="text" name="testName"  >
+      </p>
+      
+      <p>Créer un test avec ces images
+        <button class="ui submit red button" type="submit">Go !</button>      </p>
+    </form>
     
     </div>
   {% include "footer.html" %}

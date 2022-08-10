@@ -386,7 +386,15 @@ def createTest():
 
 @app.route('/CreateTest', methods=['POST'])
 @login_required
-def createTest():
+def createTest_post():
+    testName = request.form.get("testName")
+    images = request.files.getlist("uploads")
+    repertoire = "./static/images/tests/" + testName
+    if not os.path.exists(repertoire):
+        os.makedirs(repertoire)
+        for file in images:
+            chemin=os.path.join(repertoire, file.filename)
+            file.save(chemin)
     return redirect(url_for("profile"))
 
 
@@ -397,10 +405,6 @@ def viewResults():
 
     
 
-@app.route('/addImages')
-@login_required
-def addImages():
-    return redirect(url_for("profile"))
 ########################################################################################################################################################
 
 #ancien code !!!!
