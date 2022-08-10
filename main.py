@@ -19,8 +19,8 @@ from models import User, Stamp, Exchange, Message, TestResult, VisuTest, db
 # Load environment variables
 load_dotenv()
 
-debug = TRUE
-secret_key = pleasereplacebyrandomshit
+debug = "TRUE"
+secret_key = "pleasereplacebyrandomshit"
 db_uri = 'sqlite:///db.sqlite3'
 UPLOAD_FOLDER='./static/images/upload/'
 ADMIN_NAME='admin'
@@ -660,5 +660,5 @@ app.jinja_env.globals.update(get_message_number=get_message_number)
 
 # Start development web server
 if __name__ == '__main__':
-    #app.run()
-    app.run(host='0.0.0.0', port=5000, debug=os.getenv("debug"))
+    app.run()
+    #app.run(host='0.0.0.0', port=5000, debug=os.getenv("debug"))
