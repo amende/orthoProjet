@@ -380,6 +380,8 @@ def viewTests():
 @login_required
 def setTest():
     folder=request.form.get("folder")
+    if folder=="":
+        return redirect(url_for("viewTests"))
     user=current_user
     user.testFolder=folder
     db.session.commit()
