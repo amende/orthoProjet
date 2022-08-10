@@ -19,18 +19,24 @@ from models import User, Stamp, Exchange, Message, TestResult, VisuTest, db
 # Load environment variables
 load_dotenv()
 
+debug = TRUE
+secret_key = pleasereplacebyrandomshit
+db_uri = 'sqlite:///db.sqlite3'
+UPLOAD_FOLDER='./static/images/upload/'
+ADMIN_NAME='admin'
+ADMIN_PASSWORD='admin'
 
 # App initialisation
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv("secret_key")
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("db_uri")
+app.config['SECRET_KEY'] = secret_key
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['ADMIN_NAME']=os.getenv("ADMIN_NAME")
-app.config['ADMIN_PASSWORD']=os.getenv("ADMIN_PASSWORD")
+app.config['ADMIN_NAME']=ADMIN_NAME
+app.config['ADMIN_PASSWORD']=ADMIN_PASSWORD
 
 
 # gestion des upload images des timbres
-app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER')
+app.config['UPLOAD_FOLDER'] ='./static/images/upload/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 # CSP Policy
@@ -102,8 +108,8 @@ def profile():
 @app.route('/signup')
 def signup():
     if (User.query.filter_by(isAdmin=True).count()==0):
-        admin = User(email="admin@admin", name=app.config['ADMIN_NAME'],
-                                    password=bcrypt.hashpw(app.config['ADMIN_PASSWORD'].encode('utf-8'), bcrypt.gensalt()),testFolder="premierTest",isAdmin=True)
+        admin = User(email="admin@admin", name=ADMIN_NAME,
+                                    password=bcrypt.hashpw(ADMIN_PASSWORD.encode('utf-8'), bcrypt.gensalt()),testFolder="premierTest",isAdmin=True)
         db.session.add(admin)                       
         db.session.commit()
     if current_user.is_authenticated:
