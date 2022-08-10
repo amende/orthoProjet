@@ -22,8 +22,11 @@ class TestResult(db.Model):
     result = db.Column(db.String(101), unique=False)
     time = db.Column(db.DateTime)
     testSent = db.Column(db.Boolean)
-    
 
+class VisuTest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    visu = db.Column(db.String(15000))
+    admin = db.Column(db.Boolean)
 
 ###########################"" code des timbres ###################################""
 

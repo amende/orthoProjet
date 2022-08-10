@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "header.html" %}
+</head>
+
+<body>
+
+  {% include "navbar.html" %}
+  {% include "errors.html" %}
+
+
+  <div class="ui large header">Bonjour, {{current_user.name}}, bientot ici les résultats</div>
+  <div class="ui large header"><br>
+    {% for string in stringList %}
+
+    {% if string=="end" %}
+    <br><br>
+    {% else %}
+    {{string}}<br>
+    {% endif %}
+    {% endfor %}
+    
+    </div>
+  {% include "footer.html" %}
+</body>
+</html>

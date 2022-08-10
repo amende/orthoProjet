@@ -13,7 +13,7 @@ import datetime
 #import smtplib, ssl
 
 # local files:
-from models import User, Stamp, Exchange, Message, TestResult, db
+from models import User, Stamp, Exchange, Message, TestResult, VisuTest, db
 
 
 # Load environment variables
@@ -247,8 +247,8 @@ def makeTest():
     #si c'est un refresh, refaire un test
     user=current_user
     userTestFolder=user.testFolder
-    TestResult.query.filter_by(owner=user.id,testSent=False).delete()
-    db.session.commit()
+    TestResult.query.filter_by(owner=user.id).delete()
+    #db.session.commit()
     filenames = ['images/tests/' + userTestFolder +"/" + f for f in listdir("./static/images/tests/"+userTestFolder) if isfile(join("./static/images/tests/"+userTestFolder, f))]
     random.shuffle(filenames)
     strFiles=''
@@ -256,14 +256,14 @@ def makeTest():
         strFiles+=k
         strFiles+="::"
     
-    new_test = TestResult(images=strFiles, owner = user.id,result="",testSent=False
+    new_test = TestResult(images=strFiles, owner = user.id,result=""
                         )
     db.session.add(new_test)
     db.session.commit()
     ##test
-    testResult=TestResult.query.filter_by(owner=user.id).first()
-    images=testResult.images
-    return (render_template('makeTest.html',strFiles=strFiles,images=images))
+    #testResult=TestResult.query.filter_by(owner=user.id,testSent=False).first()
+    #images=testResult.images      ,images=images
+    return (render_template('makeTest.html',strFiles=strFiles))
 
 @app.route('/testing', methods=['POST'])
 @login_required
@@ -340,11 +340,17 @@ def endTest():
     for k in range(len(listeImages)):
         listeDuo.append((mesImages[k],listeResultats[k]))
 
-    #supprimer le test de la base de données
+
+    texteResultat=""
+    for k in listeDuo:
+        texteResultat+= k[0]+","+k[1]+";"
+    texteResultat+="end;"
+    new_visu=VisuTest(visu=texteResultat,admin=True)
+    db.session.add(new_visu)
     TestResult.testSent=True
+    db.session.delete(TestResult.query.filter_by(id=TestResult.id).first())
     db.session.commit()
-    #dire merci et bonne journée
-    #proposer un retour vers le profil
+
     return (render_template('endTest.html',listeDuo=listeDuo,totalTime=totalTime))
 
 
@@ -401,7 +407,14 @@ def createTest_post():
 @app.route('/ViewResults')
 @login_required
 def viewResults():
-    return redirect(url_for("profile"))
+    listeTests = VisuTest.query.filter_by(admin=True)
+    stringList=[]
+    
+    for k in listeTests:
+        divisionListe=k.visu.split(";")
+        for i in divisionListe:
+            stringList.append(i)
+    return (render_template('viewResults.html',stringList=stringList))
 
     
 
