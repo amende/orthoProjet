@@ -59,11 +59,11 @@ def protect_response(response):
 # Database initialisation
 db.init_app(app)
 
-# Just for easier debug
-if os.getenv("debug"):
-    with app.app_context():
-        # db.drop_all()
-        db.create_all()
+
+
+with app.app_context():
+    # db.drop_all()
+    db.create_all()
     
 
 
@@ -654,4 +654,5 @@ app.jinja_env.globals.update(get_message_number=get_message_number)
 
 # Start development web server
 if __name__ == '__main__':
+    #app.run()
     app.run(host='0.0.0.0', port=5000, debug=os.getenv("debug"))
