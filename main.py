@@ -336,7 +336,8 @@ def endTest():
 
     ###############################"""
     listeImages=str(testResult.images).split("::")
-    listeImages.remove("")
+    if "" in listeImages:
+        listeImages.remove("")
     mesImages=[]
     for k in listeImages:
         mesImages.append(str(k).removeprefix("images/tests/" + userTestFolder))
@@ -369,7 +370,8 @@ def viewTests():
     folderList=[]
     for k in links:
         folderList.append(k.removeprefix("./static/images/tests/"))
-    folderList.remove("")
+    if "" in folderList:
+        folderList.remove("")
     return (render_template('viewTests.html', folderList=folderList))
 
 
