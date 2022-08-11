@@ -12,7 +12,7 @@
     <p>fichiers : {{strFiles}} , nextPage: {{nextPage}}, resultat={{result}}, debut chrono:{{chrono}}</p>
     
       <div class="ui large header"> Que représente cette image ?</div>
-      <img src="{{ url_for('static', filename=imageTest)}}" width="500">
+      <img src="{{ imageTest }}" width="500">
       <form class="ui form" action={{nextPage}} method='POST'>
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <input type="hidden" name="strFiles" value={{ strFiles }}/>
