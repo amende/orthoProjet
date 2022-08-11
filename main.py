@@ -19,7 +19,7 @@ from models import User, Stamp, Exchange, Message, TestResult, VisuTest, db
 # Load environment variables
 load_dotenv()
 
-PATH_TO_TESTS="/home/100mots/orthoProjet/static/images/tests/"
+PATH_TO_TESTS="/home/100mots/orthoProjet/tests/"
 debug = "TRUE"
 secret_key = "pleasereplacebyrandomshit"
 db_uri = 'sqlite:///db.sqlite3'
@@ -97,6 +97,15 @@ def load_user(id):
 @app.route('/')
 def home():
     return render_template('home.html', stampCount=Stamp.query.count())
+
+
+
+#protect the test file :
+@app.route('/tests/<path:filename>')
+@login_required
+def noAccess():
+    return redirect(url_for('profile'))
+
 
 
 @app.route('/profile')
@@ -413,12 +422,13 @@ def createTest_post():
     else:
         testName = request.form.get("testName")
         images = request.files.getlist("uploads")
-        repertoire =  + testName
+        repertoire = PATH_TO_TESTS + testName
         if not os.path.exists(repertoire):
             os.makedirs(repertoire)
             for file in images:
-                chemin=os.path.join(repertoire, file.filename)
-                file.save(chemin)
+                if allowed_file(file.filename):
+                    chemin=os.path.join(repertoire, file.filename)
+                    file.save(chemin)
         return redirect(url_for("profile"))
 
 
