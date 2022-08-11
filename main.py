@@ -158,7 +158,7 @@ def signup_post():
             return(redirect(url_for('signup')))
 
         new_user = User(email=email, name=name,
-                        password=bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()),testFolder="premierTest",isAdmin=False)
+                        password=bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()),testFolder="premierTest/",isAdmin=False)
         db.session.add(new_user)
         db.session.commit()
         flash("Account has been created, now please login.")
@@ -266,7 +266,7 @@ def makeTest():
     userTestFolder=user.testFolder
     TestResult.query.filter_by(owner=user.id).delete()
     #db.session.commit()
-    filenames = ['images/tests/' + userTestFolder +"/" + f for f in listdir(PATH_TO_TESTS+userTestFolder) if isfile(join(PATH_TO_TESTS+userTestFolder, f))]
+    filenames = ['images/tests/' + userTestFolder  + f for f in listdir(PATH_TO_TESTS+userTestFolder) if isfile(join(PATH_TO_TESTS+userTestFolder, f))]
     random.shuffle(filenames)
     strFiles=''
     for k in filenames:
