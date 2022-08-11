@@ -266,7 +266,7 @@ def makeTest():
     userTestFolder=user.testFolder
     TestResult.query.filter_by(owner=user.id).delete()
     #db.session.commit()
-    filenames = ['images/tests/' + userTestFolder +'/' + f for f in listdir(PATH_TO_TESTS+userTestFolder) if isfile(join(PATH_TO_TESTS+userTestFolder, f))]
+    filenames = [ f for f in listdir(PATH_TO_TESTS+userTestFolder) if isfile(join(PATH_TO_TESTS+userTestFolder, f))]
     random.shuffle(filenames)
     strFiles=''
     for k in filenames:
@@ -308,7 +308,7 @@ def testing():
         nextPage="/endTest"
     if filenames[-1]=="/":
         filenames.pop()
-    imageTest=filenames.pop()
+    imageTest=join(PATH_TO_TESTS , filenames.pop())
     strFiles=""
     for k in filenames:
         strFiles+=k
