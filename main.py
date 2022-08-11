@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, redirect, url_for, request, flash, send_from_directory
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from flask_talisman import Talisman
 from dotenv import load_dotenv
@@ -36,7 +36,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['ADMIN_NAME']=ADMIN_NAME
 app.config['ADMIN_PASSWORD']=ADMIN_PASSWORD
-
+app.config['RELATIVE_PATH_TO_TESTS'] = RELATIVE_PATH_TO_TESTS
 
 # gestion des upload images des timbres
 app.config['UPLOAD_FOLDER'] ='./static/images/upload/'
@@ -93,6 +93,12 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+@app.route('/tests/<path:filename>')
+@login_required
+def uploaded_file(path="",filename=""):
+    return send_from_directory(app.config['RELATIVE_PATH_TO_TESTS']+path,
+                               filename)
 
 
 @app.route('/')
