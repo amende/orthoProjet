@@ -20,6 +20,7 @@ from models import User, Stamp, Exchange, Message, TestResult, VisuTest, db
 load_dotenv()
 
 PATH_TO_TESTS="/home/100mots/orthoProjet/tests/"
+RELATIVE_PATH_TO_TESTS="/tests/"
 debug = "TRUE"
 secret_key = "pleasereplacebyrandomshit"
 db_uri = 'sqlite:///db.sqlite3'
@@ -103,7 +104,7 @@ def home():
 #protect the test file :
 @app.route('/tests/<path:filename>')
 @login_required
-def noAccess():
+def noAccess(path,filename):
     return redirect(url_for('profile'))
 
 
@@ -308,7 +309,7 @@ def testing():
         nextPage="/endTest"
     if filenames[-1]=="/":
         filenames.pop()
-    imageTest=join(PATH_TO_TESTS +user.testFolder, filenames.pop())
+    imageTest=join(RELATIVE_PATH_TO_TESTS +user.testFolder, filenames.pop())
     strFiles=""
     for k in filenames:
         strFiles+=k
