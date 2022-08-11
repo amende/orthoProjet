@@ -308,7 +308,7 @@ def testing():
         nextPage="/endTest"
     if filenames[-1]=="/":
         filenames.pop()
-    imageTest=join(PATH_TO_TESTS , filenames.pop())
+    imageTest=join(PATH_TO_TESTS +user.testFolder, filenames.pop())
     strFiles=""
     for k in filenames:
         strFiles+=k
