@@ -19,6 +19,7 @@ from models import User, Stamp, Exchange, Message, TestResult, VisuTest, db
 # Load environment variables
 load_dotenv()
 
+PATH_TO_TESTS="/home/100mots/orthoProjet/static/images/tests"
 debug = "TRUE"
 secret_key = "pleasereplacebyrandomshit"
 db_uri = 'sqlite:///db.sqlite3'
@@ -255,7 +256,7 @@ def makeTest():
     userTestFolder=user.testFolder
     TestResult.query.filter_by(owner=user.id).delete()
     #db.session.commit()
-    filenames = ['images/tests/' + userTestFolder +"/" + f for f in listdir("./static/images/tests/"+userTestFolder) if isfile(join("./static/images/tests/"+userTestFolder, f))]
+    filenames = ['images/tests/' + userTestFolder +"/" + f for f in listdir(PATH_TO_TESTS+userTestFolder) if isfile(join(PATH_TO_TESTS+userTestFolder, f))]
     random.shuffle(filenames)
     strFiles=''
     for k in filenames:
@@ -366,10 +367,10 @@ def endTest():
 @login_required
 def viewTests():
     #lister les répertoires:[x[0] for x in os.walk(os.getcwd())] 
-    links=[x[0] for x in os.walk("./static/images/tests/")]
+    links=[x[0] for x in os.walk(PATH_TO_TESTS)]
     folderList=[]
     for k in links:
-        folderList.append(k.removeprefix("./static/images/tests/"))
+        folderList.append(k.removeprefix(PATH_TO_TESTS))
     if "" in folderList:
         folderList.remove("")
     return (render_template('viewTests.html', folderList=folderList))
@@ -405,7 +406,7 @@ def createTest():
 def createTest_post():
     testName = request.form.get("testName")
     images = request.files.getlist("uploads")
-    repertoire = "./static/images/tests/" + testName
+    repertoire =  + testName
     if not os.path.exists(repertoire):
         os.makedirs(repertoire)
         for file in images:
@@ -664,5 +665,5 @@ app.jinja_env.globals.update(get_message_number=get_message_number)
 
 # Start development web server
 if __name__ == '__main__':
-    app.run()
-    #app.run(host='0.0.0.0', port=5000, debug=os.getenv("debug"))
+    #app.run()
+    app.run(host='0.0.0.0', port=5000, debug=True)
