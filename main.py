@@ -99,14 +99,14 @@ def load_user(id):
 def home():
     return render_template('home.html', stampCount=Stamp.query.count())
 
-
+"""
 
 #protect the test file :
 @app.route('/tests/<path:filename>')
 @login_required
-def noAccess(path,filename):
+def noAccess(path=0,filename=0):
     return redirect(url_for('profile'))
-
+"""
 
 
 @app.route('/profile')
