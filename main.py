@@ -26,6 +26,7 @@ db_uri = 'sqlite:///db.sqlite3'
 UPLOAD_FOLDER='./static/images/upload/'
 ADMIN_NAME='admin'
 ADMIN_PASSWORD='admin'
+ADMIN_MAIL="admin@admin"
 
 # App initialisation
 app = Flask(__name__)
@@ -109,7 +110,7 @@ def profile():
 @app.route('/signup')
 def signup():
     if (User.query.filter_by(isAdmin=True).count()==0):
-        admin = User(email="admin@admin", name=ADMIN_NAME,
+        admin = User(email=ADMIN_MAIL, name=ADMIN_NAME,
                                     password=bcrypt.hashpw(ADMIN_PASSWORD.encode('utf-8'), bcrypt.gensalt()),testFolder="premierTest",isAdmin=True)
         db.session.add(admin)                       
         db.session.commit()
@@ -398,34 +399,43 @@ def setTest():
 @app.route('/CreateTest')
 @login_required
 def createTest():
-    return (render_template('createTest.html'))
+    if current_user.email != ADMIN_MAIL:
+        return redirect(url_for('profile'))
+    else:
+        return (render_template('createTest.html'))
 
 
 @app.route('/CreateTest', methods=['POST'])
 @login_required
 def createTest_post():
-    testName = request.form.get("testName")
-    images = request.files.getlist("uploads")
-    repertoire =  + testName
-    if not os.path.exists(repertoire):
-        os.makedirs(repertoire)
-        for file in images:
-            chemin=os.path.join(repertoire, file.filename)
-            file.save(chemin)
-    return redirect(url_for("profile"))
+    if current_user.email != ADMIN_MAIL:
+        return redirect(url_for('profile'))
+    else:
+        testName = request.form.get("testName")
+        images = request.files.getlist("uploads")
+        repertoire =  + testName
+        if not os.path.exists(repertoire):
+            os.makedirs(repertoire)
+            for file in images:
+                chemin=os.path.join(repertoire, file.filename)
+                file.save(chemin)
+        return redirect(url_for("profile"))
 
 
 @app.route('/ViewResults')
 @login_required
 def viewResults():
-    listeTests = VisuTest.query.filter_by(admin=True)
-    stringList=[]
-    
-    for k in listeTests:
-        divisionListe=k.visu.split(";")
-        for i in divisionListe:
-            stringList.append(i)
-    return (render_template('viewResults.html',stringList=stringList))
+    if current_user.email != ADMIN_MAIL:
+        return redirect(url_for('profile'))
+    else:
+        listeTests = VisuTest.query.filter_by(admin=True)
+        stringList=[]
+        
+        for k in listeTests:
+            divisionListe=k.visu.split(";")
+            for i in divisionListe:
+                stringList.append(i)
+        return (render_template('viewResults.html',stringList=stringList))
 
     
 
