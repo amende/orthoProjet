@@ -19,7 +19,7 @@ from models import User, Stamp, Exchange, Message, TestResult, VisuTest, db
 # Load environment variables
 load_dotenv()
 
-PATH_TO_TESTS="/home/100mots/orthoProjet/static/images/tests"
+PATH_TO_TESTS="/home/100mots/orthoProjet/static/images/tests/"
 debug = "TRUE"
 secret_key = "pleasereplacebyrandomshit"
 db_uri = 'sqlite:///db.sqlite3'
