@@ -19,8 +19,8 @@ from models import User, Stamp, Exchange, Message, TestResult, VisuTest, db
 # Load environment variables
 load_dotenv()
 
-PATH_TO_TESTS="/home/100mots/orthoProjet/tests/"
-RELATIVE_PATH_TO_TESTS="/tests/"
+PATH_TO_TESTS="/home/100mots/orthoProjet/static/images/tests/"
+RELATIVE_PATH_TO_TESTS="/static/images/tests/"
 debug = "TRUE"
 secret_key = "pleasereplacebyrandomshit"
 db_uri = 'sqlite:///db.sqlite3'
@@ -94,13 +94,16 @@ login_manager.init_app(app)
 def load_user(id):
     return User.query.get(int(id))
 
+
+#code pour accéder au répertoire des tests, mais ça fonctionne po :/
+"""
 @app.route('/tests/<path:filename>')
 @login_required
 def uploaded_file(path="",filename=""):
     return send_from_directory(app.config['RELATIVE_PATH_TO_TESTS']+path,
                                filename)
 
-
+"""
 @app.route('/')
 def home():
     return render_template('home.html', stampCount=Stamp.query.count())
