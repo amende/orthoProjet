@@ -41,7 +41,7 @@
         <br/>
         <br/>
         <!-- ici il faudra rajouter un test conditionnel, si l'utilisateur a déjà choisi son test-->
-        {% if current_user.testFolder=="premierTest" %}
+        {% if current_user.testFolder=="premierTest/" %}
         <div class="ui horizontal divider">Selectionner mon test :</div>
         <a href="/ViewTests"><button class="ui submit button">Voir les tests</button></a>
         {% else %}

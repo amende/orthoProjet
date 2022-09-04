@@ -477,7 +477,7 @@ def viewResults():
                     divisionListe=k.visu.split(";")
                     for i in divisionListe:
                         stringList.append(i)
-                return (render_template('viewResults.html',stringList=stringList))
+            return (render_template('viewResults.html',stringList=stringList))
 
     
 
