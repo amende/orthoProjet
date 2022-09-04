@@ -5,9 +5,7 @@ faire des tests pour les patients atteints d'Alzheimer, évaluer la conservation
 # To Do généraux:
 
 
-faire un filtrage pour la visualisation des résultats: par ID utilisateur, par date (méthodes GET et POST)
-
-ajouter le nom et le temps lors de la visu des résultats 
+ajouter la date lors de la visu des résultats 
 
 
 

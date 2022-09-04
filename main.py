@@ -374,7 +374,7 @@ def endTest():
     for k in listeDuo:
         texteResultat+= k[0].split(".")[0]+","+k[1]+";"
     texteResultat+="end;"
-    new_visu=VisuTest(visu=texteResultat,timeVisu=totalTime,owner=user.id,admin=True)
+    new_visu=VisuTest(visu=texteResultat,timeVisu="fait en "+totalTime+" le "+ datetime.now().date(),owner=user.id,admin=True)
     db.session.add(new_visu)
     TestResult.testSent=True
     db.session.delete(TestResult.query.filter_by(id=TestResult.id).first())
