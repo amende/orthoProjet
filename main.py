@@ -372,7 +372,7 @@ def endTest():
 
     texteResultat=""
     for k in listeDuo:
-        texteResultat+= k[0]+","+k[1]+";"
+        texteResultat+= k[0].split(".")[0]+","+k[1]+";"
     texteResultat+="end;"
     new_visu=VisuTest(visu=texteResultat,timeVisu=totalTime,owner=user.id,admin=True)
     db.session.add(new_visu)
@@ -459,12 +459,12 @@ def viewResults():
         stringList=[]
         
         for k in listeTests:
-            stringList.append(str(k.timeVisu))
+            stringList.append("temps: "+str(k.timeVisu))
             user_name=User.query.filter_by(id=k.owner).first().name
-            stringList.append(user_name)
+            stringList.append("nom d'utilisateur: "+user_name)
             divisionListe=k.visu.split(";")
             for i in divisionListe:
-                stringList.append(i.split(".")[0])
+                stringList.append(i)
         return (render_template('viewResults.html',stringList=stringList))
 
     
