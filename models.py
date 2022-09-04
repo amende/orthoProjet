@@ -26,7 +26,7 @@ class TestResult(db.Model):
 class VisuTest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     visu = db.Column(db.String(15000))
-    timeVisu = db.Column(db.DateTime)
+    timeVisu = db.Column(db.String(100))
     owner = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     admin = db.Column(db.Boolean)
 
