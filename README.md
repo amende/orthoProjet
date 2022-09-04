@@ -4,11 +4,13 @@ faire des tests pour les patients atteints d'Alzheimer, évaluer la conservation
 
 # To Do généraux:
 
-faire un filtrage pour la visualisation des résultats: par ID utilisateur, par date
-ajouter un mdp lors de la sélection du test pour que seul les patients légitimes puissent s'inscrire
-ajouter le nom et le temps lors de la visu des résultats
-enlever l'extension dans l'affichage des résultats
-centrer les éléments, rendre tout plus joli, enlever les éléments de débug
+
+faire un filtrage pour la visualisation des résultats: par ID utilisateur, par date (méthodes GET et POST)
+
+ajouter le nom et le temps lors de la visu des résultats 
+
+
+
 
 faire un onglet entrainement (devinette, SFA ,répétition)
 

@@ -9,13 +9,16 @@
   {% include "navbar.html" %}
   {% include "errors.html" %}
 
-
-  <div class="ui large header">Bonjour, {{current_user.name}},<br>{{strFiles}},<br> verif BDD:<br>{{images}}
+  <div class="ui center aligned segment" id="mainSegment">
+  <div class="ui large header">Bonjour, {{current_user.name}}. Vous aller commencer le test.
   </div>
   <form class="ui form" action="/testing" method='POST'>
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <input type="hidden" name="strFiles" value={{strFiles}}/>
       <button class="ui submit red button" type="submit">commencer !</button>
+      </form>
+    </div>
+  
   <!-- fichiers : {{filenames}} , liste images restantes: {{listIndexImg}}, longueur restante : {{lenTest}}
   <div class="ui two column centered grid" id="mainContainer">
     <div class="ui center aligned segment" id="mainSegment">
@@ -31,8 +34,7 @@
           </div>
         </div>
         {% endfor %}
-      </div>
-    </div>
+     
     -->
   </div>  {% include "footer.html" %}
 </body>

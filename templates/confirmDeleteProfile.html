@@ -8,11 +8,11 @@
   {% include "errors.html" %}
   <div class="ui two column centered grid" id="mainContainer">
     <div class="ui center aligned segment" id="mainSegment">
-     <p id="textBold">Are you sure ?<br/>This will delete all your data on this website, including messages.<br/>This action cannot be undone !</p>
+     <p id="textBold">êtes vous certain ?<br/>Cela supprimera toutes vos données sur ce site<br/>Vous ne pourrez pas récupérer votre compte !</p>
        <form class="ui form" action="/deleteProfile" method='POST'>
          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-           <button class="ui submit red button" type="submit">Yes !</button>
-           <a href="/profile"><button class="ui blue button" type="button">No, go back</button></a>
+           <button class="ui submit red button" type="submit">Oui !</button>
+           <a href="/profile"><button class="ui blue button" type="button">Non, j'ai changé d'avis</button></a>
        </form>
     </div>
   </div>

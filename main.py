@@ -28,6 +28,7 @@ UPLOAD_FOLDER='./static/images/upload/'
 ADMIN_NAME='admin'
 ADMIN_PASSWORD='admin'
 ADMIN_MAIL="admin@admin"
+TEST_ACCESS_PASSWORD='access'
 
 # App initialisation
 app = Flask(__name__)
@@ -373,13 +374,13 @@ def endTest():
     for k in listeDuo:
         texteResultat+= k[0]+","+k[1]+";"
     texteResultat+="end;"
-    new_visu=VisuTest(visu=texteResultat,admin=True)
+    new_visu=VisuTest(visu=texteResultat,timeVisu=totalTime,owner=user,admin=True)
     db.session.add(new_visu)
     TestResult.testSent=True
     db.session.delete(TestResult.query.filter_by(id=TestResult.id).first())
     db.session.commit()
-
-    return (render_template('endTest.html',listeDuo=listeDuo,totalTime=totalTime))
+    flash("Test terminé")
+    return (render_template('endTest.html'))
 
 
 
@@ -400,13 +401,18 @@ def viewTests():
 @app.route('/SetTest',methods=['POST'])
 @login_required
 def setTest():
-    folder=request.form.get("folder")
-    if folder=="":
-        return redirect(url_for("viewTests"))
-    user=current_user
-    user.testFolder=folder
-    db.session.commit()
-    return redirect(url_for("profile"))
+    if request.form.get("password")==TEST_ACCESS_PASSWORD:
+        folder=request.form.get("folder")
+        if folder=="":
+            return redirect(url_for("viewTests"))
+        user=current_user
+        user.testFolder=folder
+        db.session.commit()
+        flash("Test sélectionné")
+        return redirect(url_for("profile"))
+    else:
+        flash("MDP incorrect")
+        return redirect(url_for("profile"))
 
 
 
@@ -439,6 +445,7 @@ def createTest_post():
                 if allowed_file(file.filename):
                     chemin=os.path.join(repertoire, file.filename)
                     file.save(chemin)
+        flash("Test créé")
         return redirect(url_for("profile"))
 
 
@@ -452,9 +459,12 @@ def viewResults():
         stringList=[]
         
         for k in listeTests:
+            stringList.append(str(k.timeVisu))
+            user_name=User.query.filter_by(id=k.owner).first().name
+            stringList.append(user_name)
             divisionListe=k.visu.split(";")
             for i in divisionListe:
-                stringList.append(i)
+                stringList.append(i.split(".")[0])
         return (render_template('viewResults.html',stringList=stringList))
 
     
