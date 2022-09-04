@@ -472,7 +472,7 @@ def viewResults():
             for k in listeTests:
                 user_name=User.query.filter_by(id=k.owner).first().name
                 if user_name==request.form.get("username"):
-                    stringList.append("temps: "+str(k.timeVisu))
+                    stringList.append(str(k.timeVisu))
                     stringList.append("nom d'utilisateur: "+user_name)
                     divisionListe=k.visu.split(";")
                     for i in divisionListe:
