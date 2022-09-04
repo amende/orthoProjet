@@ -449,23 +449,35 @@ def createTest_post():
         return redirect(url_for("profile"))
 
 
-@app.route('/ViewResults')
+@app.route('/ViewResults', methods=['GET', 'POST'])
 @login_required
 def viewResults():
     if current_user.email != ADMIN_MAIL:
         return redirect(url_for('profile'))
     else:
-        listeTests = VisuTest.query.filter_by(admin=True)
-        stringList=[]
-        
-        for k in listeTests:
-            stringList.append("temps: "+str(k.timeVisu))
-            user_name=User.query.filter_by(id=k.owner).first().name
-            stringList.append("nom d'utilisateur: "+user_name)
-            divisionListe=k.visu.split(";")
-            for i in divisionListe:
-                stringList.append(i)
-        return (render_template('viewResults.html',stringList=stringList))
+        if request.method=="GET":
+            listeTests = VisuTest.query.filter_by(admin=True)
+            stringList=[]
+            for k in listeTests:
+                stringList.append("temps: "+str(k.timeVisu))
+                user_name=User.query.filter_by(id=k.owner).first().name
+                stringList.append("nom d'utilisateur: "+user_name)
+                divisionListe=k.visu.split(";")
+                for i in divisionListe:
+                    stringList.append(i)
+            return (render_template('viewResults.html',stringList=stringList))
+        else:
+            listeTests = VisuTest.query.filter_by(admin=True)
+            stringList=[]
+            for k in listeTests:
+                user_name=User.query.filter_by(id=k.owner).first().name
+                if user_name==request.form.get("username"):
+                    stringList.append("temps: "+str(k.timeVisu))
+                    stringList.append("nom d'utilisateur: "+user_name)
+                    divisionListe=k.visu.split(";")
+                    for i in divisionListe:
+                        stringList.append(i)
+                return (render_template('viewResults.html',stringList=stringList))
 
     
 

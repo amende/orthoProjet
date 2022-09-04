@@ -8,9 +8,16 @@
 
   {% include "navbar.html" %}
   {% include "errors.html" %}
+  <div class="ui center aligned segment" id="mainSegment">
 
+  <div class="ui large header">Bonjour, {{current_user.name}}</div>
 
-  <div class="ui large header">Bonjour, {{current_user.name}}, bientot ici les résultats</div>
+  <p>Filtrage par nom:</p>
+  <form action="/ViewResults" method='POST'>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <input type="text" name="username">
+    <button class="ui submit green button" type="submit">Filtrer avec ce nom</button>
+    </form>
   <div class="ui large header"><br>
     {% for string in stringList %}
 
@@ -21,6 +28,7 @@
     {% endif %}
     {% endfor %}
     
+    </div>
     </div>
   {% include "footer.html" %}
 </body>
