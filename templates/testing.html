@@ -5,10 +5,17 @@
 </head>
 
 <style>
-  img.one {
-  height: auto;
-  width: auto;
+  .box {
+  width: 30%;
+  height: 200px;
+  border: 5px dashed #f7a239;
 }
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
 
 </style>
 
@@ -21,7 +28,11 @@
     
     
       <div class="ui large header"> Que représente cette image ?</div>
-      <img class="one" src="{{ imageTest }}" width=500 height=500>
+
+      <div class=box>
+      <img class="one" src="{{ imageTest }}">
+      </div>
+      
       <form class="ui form" action={{nextPage}} method='POST'>
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <input type="hidden" name="strFiles" value={{ strFiles }}/>
