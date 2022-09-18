@@ -20,7 +20,7 @@
     
     
       <div class="ui large header"> Que représente cette image ?</div>
-      <img src="{{ imageTest }}" width="500", height=500>
+      <img src="{{ imageTest }}">
       <form class="ui form" action={{nextPage}} method='POST'>
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <input type="hidden" name="strFiles" value={{ strFiles }}/>
