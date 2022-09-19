@@ -10,12 +10,12 @@
   {% include "errors.html" %}
 
   <div class="ui center aligned segment" id="mainSegment">
-  <div class="ui large header">Bonjour, {{current_user.name}}. Vous aller commencer le test.
+  <div class="ui large header">Bonjour, {{current_user.name}}. Vous allez commencer le test.
   </div>
   <form class="ui form" action="/testing" method='POST'>
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <input type="hidden" name="strFiles" value={{strFiles}}/>
-      <button class="ui submit red button" type="submit">commencer !</button>
+      <button class="ui submit red button" type="submit">Commencer !</button>
       </form>
     </div>
   

@@ -10,16 +10,7 @@
     <div class="ui center aligned segment" id="mainSegment">
       <div class="ui large header">Bonjour, {{current_user.name}}</div>
       <br/>
-      <div class="ui horizontal divider">Vous avez :</div>
-      <br/>
-        <div class="ui statistic">
-          <div class="label">
-            Tests effectués
-          </div>
-          <div class="value">
-            {{stampsUploaded}} <!-- remplacer ici avec une variable de test fait-->
-          </div>
-        </div>
+      
         <!--
         <div class="ui statistic">
           <div class="label">
@@ -50,7 +41,7 @@
         {% endif %}
         <div class="ui horizontal divider">Modifier le profil :</div>
       </br>
-        <p id="leftAligned"> Note : laisser vide pour ne pas modifier</p>
+        <p id="leftAligned"> Note : à laisser vide pour ne pas modifier.</p>
         <form class="ui form" action="editProfile" method="POST"id="mediumWidth">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
           <div class="field">

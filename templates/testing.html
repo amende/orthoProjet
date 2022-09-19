@@ -23,8 +23,8 @@
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <input type="hidden" name="strFiles" value={{ strFiles }}/>
         <div class="ui two column centered grid" id="mainContainer">
-          <button class="ui submit green button" name='action' value="correct" type="submit">Bonne réponse !</button>
-          <button class="ui submit red button" name='action' value= "faux" type="submit"> mauvaise réponse</button>
+          <button class="ui submit green button" name='action' value="correct" type="submit">Bonne réponse</button>
+          <button class="ui submit grey button" name='action' value= "faux" type="submit">Réponse non trouvée</button>
         </div>
       <!-- fichiers : {{filenames}} , liste images restantes: {{listIndexImg}}, longueur restante : {{lenTest}}
       <div class="ui two column centered grid" id="mainContainer">

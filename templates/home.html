@@ -11,7 +11,7 @@
   <div class="ui two column centered grid" id="mainContainer">
     <div class="ui large message">
       <h1 class="ui huge header">Les 100 mots quotidiens</h1>
-      <p>Vous pouvez ici remplir les différents test proposés par notre orthophoniste en herbe</p>
+      <p>Vous pouvez ici remplir les différents test proposés.</p>
 
       {% if not current_user.is_authenticated %}
       <div class="ui buttons">
@@ -30,7 +30,7 @@
         </a>
         {% else %}
         <a href="/ViewTests">
-          <div class="ui orange button">Selectionner mon test</div>
+          <div class="ui orange button">Sélectionner mon test</div>
         </a>
         {% endif %}
       {% endif %}
