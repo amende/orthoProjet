@@ -12,6 +12,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(100), unique=True)
     testFolder = db.Column(db.String(100))
+    trainingFolder = db.Column(db.String(100))
     isAdmin = db.Column(db.Boolean)
 
 
@@ -38,6 +39,8 @@ class TrainingObject(db.Model):
     texteIndice2 = db.Column(db.String(500))
     sonIndice2Link = db.Column(db.String(500))
     sonFinalLink = db.Column(db.String(500))
+
+
 ###########################"" code des timbres ###################################""
 
 class Stamp(db.Model):

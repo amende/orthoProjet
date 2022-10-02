@@ -169,7 +169,7 @@ def signup_post():
             return(redirect(url_for('signup')))
 
         new_user = User(email=email, name=name,
-                        password=bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()),testFolder="premierTest/",isAdmin=False)
+                        password=bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()),testFolder="premierTest/", trainingFolder="tata/", isAdmin=False)
         db.session.add(new_user)
         db.session.commit()
         flash("Account has been created, now please login.")
@@ -416,6 +416,14 @@ def setTest():
 
 
 
+@app.route('/Training') #, methods=['GET', 'POST']
+@login_required
+def training():
+    user=current_user
+    trainingFolder=user.trainingFolder
+    filenames = [ f for f in listdir(PATH_TO_TESTS+userTestFolder) if isfile(join(PATH_TO_TESTS+userTestFolder, f))]
+    return(redirect(url_for('profile')))
+
 
 ######les taches de l'admin :
 
@@ -481,11 +489,14 @@ def viewResults():
 
 
 
-
-@app.route('/Training') #, methods=['GET', 'POST']
+@app.route('/CreateTrainingObject')
 @login_required
-def training():
-    return(redirect(url_for('profile')))
+def createTrainingObject():
+    if current_user.email != ADMIN_MAIL:
+        return redirect(url_for('profile'))
+    else:
+        return (render_template('createTrainingObject.html'))
+
 
 ########################################################################################################################################################
 

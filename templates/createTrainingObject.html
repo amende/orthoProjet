@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "header.html" %}
+</head>
+
+<body>
+
+  {% include "navbar.html" %}
+  {% include "errors.html" %}
+
+
+  <div class="ui large header">Bonjour, {{current_user.name}}</div>
+  <br>
+    <form method="post" enctype="multipart/form-data" action="/CreateTrainingObject" >
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+      <p>
+        <label for="imageName">
+          Choisir le nom de votre image :
+        </label>
+        <input type="text" name="imageName"  >
+      </p>
+
+      <p>
+        <label for="image">
+          Choisissez l'image
+        </label>
+        <input type="file" name="image" accept=".jpg, .jpeg, .png, .svg, .gif">
+      </p>
+      <p>
+        <label for="indice1">
+          Choisir le texte de l'indice 1 :
+        </label>
+        <input type="text" name="indice1"  >
+      </p>
+
+      <p>
+        <label for="sonIndice1">
+          Choisir le son de l'indice 1 :
+        </label>
+        <input type="file" name="sonIndice1" accept=".mpeg, .mp3">
+      </p>
+
+      <p>
+        <label for="indice2">
+          Choisir le texte de l'indice 2 :
+        </label>
+        <input type="text" name="indice2"  >
+      </p>
+      <p>
+        <label for="sonIndice1">
+          Choisir le son de l'indice 2 :
+        </label>
+        <input type="file" name="sonIndice1" accept=".mpeg, .mp3">
+      </p>
+
+      <p>
+        <label for="sonFinal">
+          Choisir le son final :
+        </label>
+        <input type="file" name="sonFinal" accept=".mpeg, .mp3">
+      </p>
+      
+      <p>Créer un objet d'entrainement
+        <button class="ui submit red button" type="submit">Go !</button>      </p>
+    </form>
+    
+    </div>
+  {% include "footer.html" %}
+</body>
+</html>
