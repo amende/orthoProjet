@@ -473,7 +473,7 @@ def testingTraining():
     db.session.commit()
     chrono=testResult.time
     filenames =strFiles.split("::")
-    nextPage="/testing"
+    nextPage="/testingTrain"
     if len(filenames)==2:
         nextPage="/profile"
         flash("entrainement terminé")
