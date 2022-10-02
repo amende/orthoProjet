@@ -509,9 +509,23 @@ def createTrainingObjectPost():
         objectName = request.form.get("imageName")
         textIndice1 = request.form.get("indice1")
         textIndice2 = request.form.get("indice2")
-        sonIndice1 = request.files.get("sonIndice1")
-        sonIndice2 = request.files.get("sonIndice2")
-        imageFile = request.files.get("image")
+        sonIndice1 = request.file["sonIndice1"]
+        if sonIndice1.filename == '':
+            flash('No selected file')
+            return redirect(url_for('profile'))
+        sonIndice2 = request.files["sonIndice2"]
+        if textIndice2.filename == '':
+            flash('No selected file')
+            return redirect(url_for('profile'))
+        imageFile = request.files["image"]
+        if imageFile.filename == '':
+            flash('No selected file')
+            return redirect(url_for('profile'))
+        sonFinal = request.file["sonFinal"]
+        if sonFinal.filename == '':
+            flash('No selected file')
+            return redirect(url_for('profile'))
+
         repertoire = PATH_TO_TRAINING_OBJECTS + objectName
         if allowed_file(sonIndice1.fileName):
             chemin = os.path.join(repertoire, "1_"+sonIndice1.filename)
@@ -519,9 +533,15 @@ def createTrainingObjectPost():
         if allowed_file(sonIndice2.fileName):
             chemin = os.path.join(repertoire, "2_"+sonIndice2.filename)
             sonIndice2.save(chemin)
-        if allowed_file(image.fileName):
-            chemin = os.path.join(repertoire, "img_"+image.filename)
-            image.save(chemin)
+        if allowed_file(imageFile.fileName):
+            chemin = os.path.join(repertoire, "img_"+imageFile.filename)
+            imageFile.save(chemin)
+        if allowed_file(sonFinal.fileName):
+            chemin = os.path.join(repertoire, "img_"+sonFinal.filename)
+            sonFinal.save(chemin)
+
+
+        #création fichiers texte
         with open(os.path.join(repertoire, "indice1.txt"), 'w') as f:
             f.write(textIndice1)
         with open(os.path.join(repertoire, "indice2.txt"), 'w') as f:
