@@ -430,7 +430,7 @@ def training():
 
 @app.route('/MakeTestTraining')   ### cette page prépare le test : nombre d'images, prise au hasard des images
 @login_required
-def makeTest():
+def makeTestTraining():
     #si c'est un refresh, refaire un test
     user=current_user
     userTestFolder=user.trainingFolder
@@ -454,7 +454,7 @@ def makeTest():
 
 @app.route('/testingTrain', methods=['POST'])
 @login_required
-def testing():
+def testingTraining():
     user = current_user
     testResult= TestResult.query.filter_by(owner=user.id).first()
     strFiles = request.form.get("strFiles")
