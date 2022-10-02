@@ -526,7 +526,7 @@ def createTrainingObject():
             f.write(textIndice1)
         with open(os.path.join(repertoire, "indice2.txt"), 'w') as f:
             f.write(textIndice2)
-        flash("Objet créé")
+        flash("Objet créé !")
         return redirect(url_for("profile"))
 
 
