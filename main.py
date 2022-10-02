@@ -479,7 +479,7 @@ def testingTraining():
         flash("entrainement terminé")
     if filenames[-1]=="/":
         filenames.pop()
-    imageTest=join(RELATIVE_PATH_TO_TESTS +user.traningFolder, filenames.pop())
+    imageTest=join(RELATIVE_PATH_TO_TESTS +user.trainingFolder, filenames.pop())
     strFiles=""
     for k in filenames:
         strFiles+=k
