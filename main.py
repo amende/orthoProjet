@@ -20,6 +20,8 @@ from models import User, Stamp, Exchange, Message, TestResult, VisuTest, Trainin
 load_dotenv()
 
 PATH_TO_TESTS="/home/100mots/orthoProjet/static/images/tests/"
+
+PATH_TO_TRAINING_OBJECTS="/home/100mots/orthoProjet/static/images/Training/Objects"
 RELATIVE_PATH_TO_TESTS="/static/images/tests/"
 debug = "TRUE"
 secret_key = "pleasereplacebyrandomshit"
@@ -41,7 +43,7 @@ app.config['RELATIVE_PATH_TO_TESTS'] = RELATIVE_PATH_TO_TESTS
 
 # gestion des upload images des timbres
 app.config['UPLOAD_FOLDER'] ='./static/images/upload/'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif','mpeg','mp3'}
 
 # CSP Policy
 csp = {
@@ -421,7 +423,7 @@ def setTest():
 def training():
     user=current_user
     trainingFolder=user.trainingFolder
-    filenames = [ f for f in listdir(PATH_TO_TESTS+userTestFolder) if isfile(join(PATH_TO_TESTS+userTestFolder, f))]
+    #filenames = [ f for f in listdir(PATH_TO_TESTS+userTestFolder) if isfile(join(PATH_TO_TESTS+userTestFolder, f))]
     return(redirect(url_for('profile')))
 
 
@@ -496,6 +498,37 @@ def createTrainingObject():
         return redirect(url_for('profile'))
     else:
         return (render_template('createTrainingObject.html'))
+
+
+@app.route('/CreateTrainingObject', methods=['POST'])
+@login_required
+def createTrainingObject():
+    if current_user.email != ADMIN_MAIL:
+        return redirect(url_for('profile'))
+    else:
+        objectName = request.form.get("imageName")
+        textIndice1 = request.form.get("indice1")
+        textIndice2 = request.form.get("indice2")
+        sonIndice1 = request.files.get("sonIndice1")
+        sonIndice2 = request.files.get("sonIndice2")
+        imageFile = request.files.get("image")
+        repertoire = PATH_TO_TRAINING_OBJECTS + objectName
+        if allowed_file(sonIndice1.fileName):
+            chemin = os.path.join(repertoire, "1_"+sonIndice1.filename)
+            sonIndice1.save(chemin)
+        if allowed_file(sonIndice2.fileName):
+            chemin = os.path.join(repertoire, "2_"+sonIndice2.filename)
+            sonIndice2.save(chemin)
+        if allowed_file(image.fileName):
+            chemin = os.path.join(repertoire, "img_"+image.filename)
+            image.save(chemin)
+        with open(os.path.join(repertoire, "indice1.txt"), 'w') as f:
+            f.write(textIndice1)
+        with open(os.path.join(repertoire, "indice2.txt"), 'w') as f:
+            f.write(textIndice2)
+        flash("Objet créé")
+        return redirect(url_for("profile"))
+
 
 
 ########################################################################################################################################################

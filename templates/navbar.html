@@ -15,13 +15,14 @@
       <a class="item" href="/profile">
         Profil
       </a>
-      <a class="item" href="/Training">
-        Entraînement
-      </a>
+     
       {% if not current_user.isAdmin %}
         {% if not current_user.testFolder=="premierTest/" %}
         <a class="item" href="/MakeTest">
           Faire le test
+        </a>
+        <a class="item" href="/Training">
+          Entraînement
         </a>
         {% else %}
         <a class="item" href="/ViewTests">
