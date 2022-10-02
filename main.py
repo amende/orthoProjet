@@ -502,7 +502,7 @@ def createTrainingObject():
 
 @app.route('/CreateTrainingObject', methods=['POST'])
 @login_required
-def createTrainingObjectPost():
+def createTrainingObject_post():
     if current_user.email != ADMIN_MAIL:
         return redirect(url_for('profile'))
     else:
