@@ -423,7 +423,7 @@ def setTest():
 @app.route('/Training') #, methods=['GET', 'POST']
 @login_required
 def training():
-    return(redirect(url_for('MakeTestTraining')))
+    return(redirect(url_for('makeTestTraining')))
 
 
 
