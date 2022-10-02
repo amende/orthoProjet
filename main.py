@@ -121,7 +121,7 @@ def noAccess(path=0,filename=0):
 """
 
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
     return render_template('profile.html', stampsUploaded=Stamp.query.filter_by(owner=current_user.id).count(),
