@@ -405,10 +405,12 @@ def viewTests():
 def setTest():
     if request.form.get("password")==TEST_ACCESS_PASSWORD:
         folder=request.form.get("folder")
+        training=request.form.get("training")
         if folder=="":
             return redirect(url_for("viewTests"))
         user=current_user
         user.testFolder=folder
+        user.trainingFolder=training
         db.session.commit()
         flash("Test sélectionné")
         return redirect(url_for("profile"))
@@ -421,10 +423,69 @@ def setTest():
 @app.route('/Training') #, methods=['GET', 'POST']
 @login_required
 def training():
+    return(redirect(url_for('MakeTestTraining')))
+
+
+
+
+@app.route('/MakeTestTraining')   ### cette page prépare le test : nombre d'images, prise au hasard des images
+@login_required
+def makeTest():
+    #si c'est un refresh, refaire un test
     user=current_user
-    trainingFolder=user.trainingFolder
-    #filenames = [ f for f in listdir(PATH_TO_TESTS+userTestFolder) if isfile(join(PATH_TO_TESTS+userTestFolder, f))]
-    return(redirect(url_for('profile')))
+    userTestFolder=user.trainingFolder
+    TestResult.query.filter_by(owner=user.id).delete()
+    #db.session.commit()
+    filenames = [ f for f in listdir(PATH_TO_TESTS+userTestFolder) if isfile(join(PATH_TO_TESTS+userTestFolder, f))]
+    random.shuffle(filenames)
+    strFiles=''
+    for k in filenames:
+        strFiles+=k
+        strFiles+="::"
+    
+    new_test = TestResult(images=strFiles, owner = user.id,result=""
+                        )
+    db.session.add(new_test)
+    db.session.commit()
+    ##test
+    #testResult=TestResult.query.filter_by(owner=user.id,testSent=False).first()
+    #images=testResult.images      ,images=images
+    return (render_template('makeTestTraining.html',strFiles=strFiles))
+
+@app.route('/testingTrain', methods=['POST'])
+@login_required
+def testing():
+    user = current_user
+    testResult= TestResult.query.filter_by(owner=user.id).first()
+    strFiles = request.form.get("strFiles")
+    if request.form.get("action"):
+        if request.form.get("action")=="correct":
+            #ici ajouter un 1 au test result 
+            testResult.result="1"+str(testResult.result)
+        else:
+            #et ici un 0
+            testResult.result="0"+str(testResult.result)
+        result=testResult.result
+    else:
+        #lancer un chrono
+        testResult.time=datetime.datetime.now()
+        result=""
+    db.session.commit()
+    chrono=testResult.time
+    filenames =strFiles.split("::")
+    nextPage="/testing"
+    if len(filenames)==2:
+        nextPage="/profile"
+        flash("entrainement terminé")
+    if filenames[-1]=="/":
+        filenames.pop()
+    imageTest=join(RELATIVE_PATH_TO_TESTS +user.testFolder, filenames.pop())
+    strFiles=""
+    for k in filenames:
+        strFiles+=k
+        strFiles+="::"
+    return(render_template('testing.html', imageTest=imageTest,strFiles=strFiles, nextPage=nextPage,result=result,chrono=chrono))
+
 
 
 ######les taches de l'admin :

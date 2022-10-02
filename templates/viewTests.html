@@ -22,6 +22,13 @@
     <option value={{folder}}>{{folder}}</option>
     {% endfor %}
   </select><br>
+  <select name="training">
+    <option value="">--Choisir l'entrainement--</option>
+  {% for folder in folderList %}
+
+  <option value={{folder}}>{{folder}}</option>
+  {% endfor %}
+</select><br>
   <input type="password" name="password" placeholder="Password">
   <button class="ui submit red button" type="submit">Choisir ce test</button>
 </form>
