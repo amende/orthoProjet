@@ -30,6 +30,14 @@ class VisuTest(db.Model):
     owner = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     admin = db.Column(db.Boolean)
 
+class TrainingObject(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    imageLink = db.Column(db.String(500))
+    texteIndice1 = db.Column(db.String(500))
+    sonIndice1Link = db.Column(db.String(500))
+    texteIndice2 = db.Column(db.String(500))
+    sonIndice2Link = db.Column(db.String(500))
+    sonFinalLink = db.Column(db.String(500))
 ###########################"" code des timbres ###################################""
 
 class Stamp(db.Model):

@@ -13,7 +13,7 @@ import datetime
 #import smtplib, ssl
 
 # local files:
-from models import User, Stamp, Exchange, Message, TestResult, VisuTest, db
+from models import User, Stamp, Exchange, Message, TestResult, VisuTest, TrainingObject, db
 
 
 # Load environment variables
@@ -479,7 +479,13 @@ def viewResults():
                         stringList.append(i)
             return (render_template('viewResults.html',stringList=stringList))
 
-    
+
+
+
+@app.route('/Training') #, methods=['GET', 'POST']
+@login_required
+def training():
+    return(redirect(url_for('profile')))
 
 ########################################################################################################################################################
 

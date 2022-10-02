@@ -15,6 +15,9 @@
       <a class="item" href="/profile">
         Profil
       </a>
+      <a class="item" href="/Training">
+        Entraînement
+      </a>
       {% if not current_user.isAdmin %}
         {% if not current_user.testFolder=="premierTest/" %}
         <a class="item" href="/MakeTest">
@@ -37,6 +40,9 @@
       </a>
       <a class="item" href="/ViewResults">
         Voir les résultats
+      </a>
+      <a class="item" href="/Training">
+        Entraînement
       </a>
       {% endif %}
 
