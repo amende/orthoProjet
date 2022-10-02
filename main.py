@@ -509,7 +509,7 @@ def createTrainingObjectPost():
         objectName = request.form.get("imageName")
         textIndice1 = request.form.get("indice1")
         textIndice2 = request.form.get("indice2")
-        sonIndice1 = request.file["sonIndice1"]
+        sonIndice1 = request.files["sonIndice1"]
         if sonIndice1.filename == '':
             flash('No selected file')
             return redirect(url_for('profile'))
@@ -521,7 +521,7 @@ def createTrainingObjectPost():
         if imageFile.filename == '':
             flash('No selected file')
             return redirect(url_for('profile'))
-        sonFinal = request.file["sonFinal"]
+        sonFinal = request.files["sonFinal"]
         if sonFinal.filename == '':
             flash('No selected file')
             return redirect(url_for('profile'))
