@@ -600,16 +600,17 @@ def viewBlitz():
     if current_user.email != ADMIN_MAIL:
         return redirect(url_for('profile'))
     objectDir=PATH_TO_TRAINING_OBJECTS+"blitz"
+    relativeObjectDir=join(RELATIVE_PATH_TO_TRAINING_OBJECTS,"blitz")
     filenames = [ f for f in listdir(objectDir) if isfile(join(objectDir, f))]
     for name in filenames:
         if "image_" in name:
-            image_name=join(RELATIVE_PATH_TO_TRAINING_OBJECTS,name)
+            image_name=join(relativeObjectDir,name)
         elif "ind1_" in name:
-            sonInd1=join(RELATIVE_PATH_TO_TRAINING_OBJECTS,name)
+            sonInd1=join(relativeObjectDir,name)
         elif "ind2_" in name:
-            sonInd2=join(RELATIVE_PATH_TO_TRAINING_OBJECTS,name)
+            sonInd2=join(relativeObjectDir,name)
         elif "final_" in name:
-            sonFinal=join(RELATIVE_PATH_TO_TRAINING_OBJECTS,name)
+            sonFinal=join(relativeObjectDir,name)
         elif "indice1.txt" in name:
             with open(join(objectDir,name)) as file:
                 text1 = file.read().rstrip()
