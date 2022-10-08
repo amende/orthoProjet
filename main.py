@@ -602,18 +602,18 @@ def viewBlitz():
     filenames = [ f for f in listdir(objectDir) if isfile(join(objectDir, f))]
     for name in filenames:
         if "image_" in name:
-            image_name=objectDir+name
+            image_name=join(objectDir,name)
         elif "ind1_" in name:
-            sonInd1=objectDir+name
+            sonInd1=join(objectDir,name)
         elif "ind2_" in name:
-            sonInd2=objectDir+name
+            sonInd2=join(objectDir,name)
         elif "final_" in name:
-            sonFinal=objectDir+name
+            sonFinal=join(objectDir,name)
         elif "indice1.txt" in name:
-            with open(objectDir+name) as file:
+            with open(join(objectDir,name)) as file:
                 text1 = file.read().rstrip()
         elif "indice2.txt" in name:
-            with open(objectDir+name) as file:
+            with open(join(objectDir,name)) as file:
                 text2 = file.read().rstrip()
     return(render_template('blitz.html', image_name=image_name,sonInd1=sonInd1, 
                                                 sonInd2=sonInd2,sonFinal=sonFinal,text1=text1,text2=text2))
