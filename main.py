@@ -569,36 +569,30 @@ def createTrainingObject_post():
         return redirect(url_for('profile'))
     else:
         objectName = request.form.get("imageName")
+        repertoire = PATH_TO_TRAINING_OBJECTS + objectName
         textIndice1 = request.form.get("indice1")
         textIndice2 = request.form.get("indice2")
         uploads = request.files.getlist("uploads")
         for file in uploads:
             if "image_" in file.filename:
-                imageFile=file
+                if allowed_file(file.fileName):
+                    chemin = os.path.join(repertoire, file.filename)
+                    file.save(chemin)
             elif "ind1_" in file.filename:
-                sonIndice1=file
+                if allowed_file(file.fileName):
+                    chemin = os.path.join(repertoire, file.filename)
+                    file.save(chemin)
             elif "ind2_" in file.filename:
-                sonIndice2=file
+                if allowed_file(file.fileName):
+                    chemin = os.path.join(repertoire, file.filename)
+                    file.save(chemin)
             elif "final_" in file.filename:
-                sonFinal=file
+                if allowed_file(file.fileName):
+                    chemin = os.path.join(repertoire, file.filename)
+                    file.save(chemin)
             else:
+                flash("fichier non désiré")
                 return redirect(url_for('profile'))
-
-        repertoire = PATH_TO_TRAINING_OBJECTS + objectName
-        if allowed_file(sonIndice1.fileName):
-            chemin = os.path.join(repertoire, "1_"+sonIndice1.filename)
-            sonIndice1.save(chemin)
-        if allowed_file(sonIndice2.fileName):
-            chemin = os.path.join(repertoire, "2_"+sonIndice2.filename)
-            sonIndice2.save(chemin)
-        if allowed_file(imageFile.fileName):
-            chemin = os.path.join(repertoire, "img_"+imageFile.filename)
-            imageFile.save(chemin)
-        if allowed_file(sonFinal.fileName):
-            chemin = os.path.join(repertoire, "img_"+sonFinal.filename)
-            sonFinal.save(chemin)
-
-
         #création fichiers texte
         with open(os.path.join(repertoire, "indice1.txt"), 'w') as f:
             f.write(textIndice1)
