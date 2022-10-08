@@ -21,7 +21,7 @@ load_dotenv()
 
 PATH_TO_TESTS="/home/100mots/orthoProjet/static/images/tests/"
 
-PATH_TO_TRAINING_OBJECTS="/home/100mots/orthoProjet/static/images/Training/Objects"
+PATH_TO_TRAINING_OBJECTS="/home/100mots/orthoProjet/static/images/Training/Objects/"
 RELATIVE_PATH_TO_TESTS="/static/images/tests/"
 debug = "TRUE"
 secret_key = "pleasereplacebyrandomshit"
@@ -572,6 +572,9 @@ def createTrainingObject_post():
         repertoire = PATH_TO_TRAINING_OBJECTS + objectName
         if not os.path.exists(repertoire):
             os.makedirs(repertoire)
+        else:
+            flash("objet déjà existant, prendre un autre nom")
+            return redirect(url_for('profile'))
         textIndice1 = request.form.get("indice1")
         textIndice2 = request.form.get("indice2")
         uploads = request.files.getlist("uploads")
