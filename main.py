@@ -22,6 +22,7 @@ load_dotenv()
 PATH_TO_TESTS="/home/100mots/orthoProjet/static/images/tests/"
 
 PATH_TO_TRAINING_OBJECTS="/home/100mots/orthoProjet/static/images/Training/Objects/"
+RELATIVE_PATH_TO_TRAINING_OBJECTS="/static/images/Training/Objects/"
 RELATIVE_PATH_TO_TESTS="/static/images/tests/"
 debug = "TRUE"
 secret_key = "pleasereplacebyrandomshit"
@@ -602,13 +603,13 @@ def viewBlitz():
     filenames = [ f for f in listdir(objectDir) if isfile(join(objectDir, f))]
     for name in filenames:
         if "image_" in name:
-            image_name=join(objectDir,name)
+            image_name=join(RELATIVE_PATH_TO_TRAINING_OBJECTS,name)
         elif "ind1_" in name:
-            sonInd1=join(objectDir,name)
+            sonInd1=join(RELATIVE_PATH_TO_TRAINING_OBJECTS,name)
         elif "ind2_" in name:
-            sonInd2=join(objectDir,name)
+            sonInd2=join(RELATIVE_PATH_TO_TRAINING_OBJECTS,name)
         elif "final_" in name:
-            sonFinal=join(objectDir,name)
+            sonFinal=join(RELATIVE_PATH_TO_TRAINING_OBJECTS,name)
         elif "indice1.txt" in name:
             with open(join(objectDir,name)) as file:
                 text1 = file.read().rstrip()
