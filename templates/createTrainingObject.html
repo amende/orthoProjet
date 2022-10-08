@@ -24,9 +24,9 @@
 
       <p>
         <label for="image">
-          Choisissez l'image
+          Choisissez les fichiers. Le nom du fichier image commencera par "image_", le son des indice par "ind1_" et "ind2" et le son final par "final_".
         </label>
-        <input type="file" name="image" accept=".jpg, .jpeg, .png, .svg, .gif">
+        <input type="file" name="uploads" accept=".jpg, .jpeg, .png, .svg, .gif, .mp3, .mpeg">
       </p>
       <p>
         <label for="indice1">
@@ -35,33 +35,14 @@
         <input type="text" name="indice1"  >
       </p>
 
-      <p>
-        <label for="sonIndice1">
-          Choisir le son de l'indice 1 :
-        </label>
-        <input type="file" name="sonIndice1" accept="audio/*">
-      </p>
-
+     
       <p>
         <label for="indice2">
           Choisir le texte de l'indice 2 :
         </label>
         <input type="text" name="indice2"  >
       </p>
-      <p>
-        <label for="sonIndice1">
-          Choisir le son de l'indice 2 :
-        </label>
-        <input type="file" name="sonIndice1" accept="audio/*">
-      </p>
-
-      <p>
-        <label for="sonFinal">
-          Choisir le son final :
-        </label>
-        <input type="file" name="sonFinal" accept="audio/*">
-      </p>
-      
+    
       <p>Créer un objet d'entrainement
         <button class="ui submit red button" type="submit">Go !</button>      </p>
     </form>

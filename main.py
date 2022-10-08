@@ -419,7 +419,7 @@ def setTest():
         return redirect(url_for("profile"))
 
 
-
+###############################     temporaire   ###################################################""
 @app.route('/Training') #, methods=['GET', 'POST']
 @login_required
 def training():
@@ -486,6 +486,7 @@ def testingTraining():
         strFiles+="::"
     return(render_template('testing.html', imageTest=imageTest,strFiles=strFiles, nextPage=nextPage,result=result,chrono=chrono))
 
+###############################     temporaire   ###################################################""
 
 
 ######les taches de l'admin :
@@ -570,22 +571,18 @@ def createTrainingObject_post():
         objectName = request.form.get("imageName")
         textIndice1 = request.form.get("indice1")
         textIndice2 = request.form.get("indice2")
-        sonIndice1 = request.files["sonIndice1"]
-        if sonIndice1.filename == '':
-            flash('No selected file')
-            return redirect(url_for('profile'))
-        sonIndice2 = request.files["sonIndice2"]
-        if textIndice2.filename == '':
-            flash('No selected file')
-            return redirect(url_for('profile'))
-        imageFile = request.files["image"]
-        if imageFile.filename == '':
-            flash('No selected file')
-            return redirect(url_for('profile'))
-        sonFinal = request.files["sonFinal"]
-        if sonFinal.filename == '':
-            flash('No selected file')
-            return redirect(url_for('profile'))
+        uploads = request.files.getlist("uploads")
+        for file in uploads:
+            if "image_" in file.filename:
+                imageFile=file
+            elif "ind1_" in file.filename:
+                sonIndice1=file
+            elif "ind2_" in file.filename:
+                sonIndice2=file
+            elif "final_" in file.filename:
+                sonFinal=file
+            else:
+                return redirect(url_for('profile'))
 
         repertoire = PATH_TO_TRAINING_OBJECTS + objectName
         if allowed_file(sonIndice1.fileName):
@@ -609,7 +606,6 @@ def createTrainingObject_post():
             f.write(textIndice2)
         flash("Objet créé !")
         return redirect(url_for("profile"))
-
 
 
 ########################################################################################################################################################
