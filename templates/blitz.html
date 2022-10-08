@@ -19,12 +19,29 @@
             <div class="eight wide column">
                 <div class="ui large header"> Que représente cette image ?</div>
 
-                    <img src="{{ image_name }}"height=300>
+                    <img src="{{ image_name }}"height=600>
 
 
             </div>
             <div class="eight wide column">
                 <div class="ui large header"> Indices:</div>
+                <p> {{text1}}</p>
+                <audio controls >
+                    <source src="{{sonInd1}}" type="audio/mp3">
+                  Your browser does not support the audio element.
+                  </audio> 
+
+                  <p> {{text2}}</p>
+                <audio controls >
+                    <source src="{{sonInd2}}" type="audio/mp3">
+                  Your browser does not support the audio element.
+                  </audio> 
+
+                  <p> Réponse :</p>
+                  <audio controls >
+                      <source src="{{sonFinal}}" type="audio/mp3">
+                    Your browser does not support the audio element.
+                    </audio> 
             </div>
             </div>
         </div>
