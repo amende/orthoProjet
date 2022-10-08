@@ -12,17 +12,24 @@
   {% include "navbar.html" %}
   {% include "errors.html" %}
   <div class="ui two column centered grid" id="mainContainer">
-    
-    <div class="eight wide column"></div>
-      <div class="ui large header"> Que représente cette image ?</div>
+    <div class="ui center aligned segment" id="mainSegment">
+      <div class="ui internally celled grid">
+        <div class="row">
+          <div class="eight wide column">
+            <div class="ui large header"> Que représente cette image ?</div>
 
-      <img src="{{ image_name }}"height=600>
+                <img src="{{ image_name }}"height=600>
 
 
+        </div>
+          <div class="eight wide column">
+            <div class="ui large header"> Indices:</div>
+          </div>
+        </div>
+      </div>
   </div>
-  <div class="eight wide column">
-    <div class="ui large header"> Indices:</div>
-  </div>
+
+
       <form class="ui form" action={{nextPage}} method='POST'>
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <input type="hidden" name="strFiles" value={{ strFiles }}/>
