@@ -11,23 +11,24 @@
 
   {% include "navbar.html" %}
   {% include "errors.html" %}
-  <div class="ui two column centered grid" id="mainContainer">
-    <div class="ui center aligned segment" id="mainSegment">
-      <div class="ui internally celled grid">
-        <div class="row">
-          <div class="eight wide column">
-            <div class="ui large header"> Que représente cette image ?</div>
+  <div class="ui center aligned segment" id="mainSegment"></div>
+    <div class="ui two column centered grid" id="mainContainer">
+        <div class="ui center aligned segment" id="mainSegment">
+        <div class="ui internally celled grid">
+            <div class="row">
+            <div class="eight wide column">
+                <div class="ui large header"> Que représente cette image ?</div>
 
-                <img src="{{ image_name }}"height=600>
+                    <img src="{{ image_name }}"height=300>
 
 
+            </div>
+            <div class="eight wide column">
+                <div class="ui large header"> Indices:</div>
+            </div>
+            </div>
         </div>
-          <div class="eight wide column">
-            <div class="ui large header"> Indices:</div>
-          </div>
-        </div>
-      </div>
-  </div>
+    </div>
 
 
       <form class="ui form" action={{nextPage}} method='POST'>
@@ -37,7 +38,8 @@
           <button class="ui submit green button" name='action' value="correct" type="submit">Bonne réponse</button>
           <button class="ui submit grey button" name='action' value= "faux" type="submit">Réponse non trouvée</button>
         </div>
-   
+      </form>
+    </div>
     </div>
   </div>  {% include "footer.html" %}
 </body>
