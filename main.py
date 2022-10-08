@@ -344,21 +344,6 @@ def endTest():
         testResult.result="0"+str(testResult.result)
     seconds = (datetime.datetime.now()-testResult.time).total_seconds()
     totalTime=str(datetime.timedelta(seconds = seconds))
-    #
-    """
-    #envoyer les résultats par mail :##########################
-    port = 465  # For SSL
-    emailPassword = "memoire67ortho"
-    sender_email = "memoireortho67@gmail.com"  # Enter your address
-    receiver_email = "memoireortho67@gmail.com"  # Enter receiver address
-    message = 
-
-    context = ssl.create_default_context()
-    with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
-        server.login(sender_email, emailPassword)
-        server.sendmail(sender_email, receiver_email, message)
-
-    ###############################"""
     listeImages=str(testResult.images).split("::")
     if "" in listeImages:
         listeImages.remove("")
@@ -606,6 +591,32 @@ def createTrainingObject_post():
         flash("Objet créé !")
         return redirect(url_for("profile"))
 
+
+
+@app.route('/viewBlitz')
+@login_required
+def viewBlitz():
+    if current_user.email != ADMIN_MAIL:
+        return redirect(url_for('profile'))
+    objectDir=PATH_TO_TRAINING_OBJECTS+"blitz"
+    filenames = [ f for f in listdir(objectDir) if isfile(join(objectDir, f))]
+    for name in filenames:
+        if "image_" in name:
+            image_name=objectDir+name
+        elif "ind1_" in name:
+            sonInd1=objectDir+name
+        elif "ind2_" in name:
+            sonInd2=objectDir+name
+        elif "final_" in name:
+            sonFinal=objectDir+name
+        elif "indice1.txt" in name:
+            with open(objectDir+name) as file:
+                text1 = file.read().rstrip()
+        elif "indice2.txt" in name:
+            with open(objectDir+name) as file:
+                text2 = file.read().rstrip()
+    return(render_template('blitz.html', image_name=image_name,sonInd1=sonInd1, 
+                                                sonInd2=sonInd2,sonFinal=sonFinal,text1=text1,text2=text2))
 
 ########################################################################################################################################################
 
