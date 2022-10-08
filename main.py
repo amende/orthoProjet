@@ -570,24 +570,26 @@ def createTrainingObject_post():
     else:
         objectName = request.form.get("imageName")
         repertoire = PATH_TO_TRAINING_OBJECTS + objectName
+        if not os.path.exists(repertoire):
+            os.makedirs(repertoire)
         textIndice1 = request.form.get("indice1")
         textIndice2 = request.form.get("indice2")
         uploads = request.files.getlist("uploads")
         for file in uploads:
             if "image_" in file.filename:
-                if allowed_file(file.fileName):
+                if allowed_file(file.filename):
                     chemin = os.path.join(repertoire, file.filename)
                     file.save(chemin)
             elif "ind1_" in file.filename:
-                if allowed_file(file.fileName):
+                if allowed_file(file.filename):
                     chemin = os.path.join(repertoire, file.filename)
                     file.save(chemin)
             elif "ind2_" in file.filename:
-                if allowed_file(file.fileName):
+                if allowed_file(file.filename):
                     chemin = os.path.join(repertoire, file.filename)
                     file.save(chemin)
             elif "final_" in file.filename:
-                if allowed_file(file.fileName):
+                if allowed_file(file.filename):
                     chemin = os.path.join(repertoire, file.filename)
                     file.save(chemin)
             else:
