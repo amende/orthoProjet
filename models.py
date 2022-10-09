@@ -31,9 +31,6 @@ class VisuTest(db.Model):
     owner = db.Column(db.Integer, db.ForeignKey('user.id', ondelete='CASCADE'))
     admin = db.Column(db.Boolean)
 
-class Training(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    objectList = db.Column(db.String(7500), unique= False)
 
 
 ###########################"" code des timbres ###################################""

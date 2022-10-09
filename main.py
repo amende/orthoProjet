@@ -13,7 +13,7 @@ import datetime
 #import smtplib, ssl
 
 # local files:
-from models import User, Stamp, Exchange, Message, TestResult, VisuTest, TrainingObject, db
+from models import User, Stamp, Exchange, Message, TestResult, VisuTest,  db
 
 
 # Load environment variables
