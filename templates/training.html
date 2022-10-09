@@ -26,23 +26,57 @@
             <div class="eight wide column">
                 <div class="ui large header"> Indices:</div>
                 <p> {{text1}}</p>
-                <audio controls >
+                <audio id="ind1" >
                     <source src="{{sonInd1}}" type="audio/mp3">
                   Your browser does not support the audio element.
                   </audio> 
+                  <button onclick="play_Audio1()" type="button">Ecouter l'indice 1</button>
 
+                  <script>
+                    var ind1 = document.getElementById("ind1");
+             
+                    function play_Audio1() {
+                        ind1.play();
+                    }
+             
+                    
+                </script>
+                  <br>
                   <p> {{text2}}</p>
-                <audio controls >
+                <audio id="ind2" >
                     <source src="{{sonInd2}}" type="audio/mp3">
                   Your browser does not support the audio element.
                   </audio> 
-
+                  
+                  
+                  <button onclick="play_Audio2()" type="button">Play Audio</button>
+                  <script>
+                    var ind2 = document.getElementById("ind2");
+             
+                    function play_Audio2() {
+                        ind2.play();
+                    }
+             
+                    
+                </script>
+                  <br>
                   <p> Réponse :</p>
-                  <audio controls >
+                  <audio id="final" >
                       <source src="{{sonFinal}}" type="audio/mp3">
                     Your browser does not support the audio element.
                     </audio> 
-
+                    <button onclick="play_Audio3()" type="button">Play Audio</button>
+                    <script>
+                        var final = document.getElementById("final");
+                 
+                        function play_Audio3() {
+                            final.play();
+                        }
+                 
+                        
+                    </script>
+                    <br>
+                    <br>
                     <form class="ui form" action='/testingTrain' method='POST'>
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <input type="hidden" name="objectsStr" value={{ objectsStr }}/>
