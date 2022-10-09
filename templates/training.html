@@ -4,7 +4,24 @@
   {% include "header.html" %}
 </head>
 
+<script>
+    var ind1 = document.getElementById("ind1");
+    function play_Audio1() {
+        ind1.play();
+    }
+    var ind2 = document.getElementById("ind2");
 
+    function play_Audio2() {
+        ind2.play();
+    }
+    var final = document.getElementById("final");
+
+    function play_Audio3() {
+        final.play();
+    }
+
+    
+</script>
 
 
 <body>
@@ -46,24 +63,7 @@
                     Your browser does not support the audio element.
                     </audio> 
                     <button onclick="play_Audio3()" type="button">Ecouter la réponse</button>
-                    <script>
-                        var ind1 = document.getElementById("ind1");
-                        function play_Audio1() {
-                            ind1.play();
-                        }
-                        var ind2 = document.getElementById("ind2");
-                
-                        function play_Audio2() {
-                            ind2.play();
-                        }
-                        var final = document.getElementById("final");
-                 
-                        function play_Audio3() {
-                            final.play();
-                        }
-                 
-                        
-                    </script>
+                    
                     <br>
                     <br>
                     <form class="ui form" action='/testingTrain' method='POST'>
