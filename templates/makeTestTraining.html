@@ -14,28 +14,11 @@
   </div>
   <form class="ui form" action="/testingTrain" method='POST'>
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-    <input type="hidden" name="strFiles" value={{strFiles}}/>
+    <input type="hidden" name="objectsStr" value={{objectsStr}}/>
       <button class="ui submit red button" type="submit">Commencer !</button>
       </form>
     </div>
   
-  <!-- fichiers : {{filenames}} , liste images restantes: {{listIndexImg}}, longueur restante : {{lenTest}}
-  <div class="ui two column centered grid" id="mainContainer">
-    <div class="ui center aligned segment" id="mainSegment">
-      <div class="ui divided items">
-
-        {% for file in filenames %}
-        <div class="link item">
-          <div class="ui tiny image">
-            <img src="{{ url_for('static', filename=file) }}">
-          </div>
-          <div class="content">
-            <a class="header">{{ file }}</a>
-          </div>
-        </div>
-        {% endfor %}
-     
-    -->
   </div>  {% include "footer.html" %}
 </body>
 </html>

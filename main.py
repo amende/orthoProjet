@@ -409,7 +409,6 @@ def setTest():
         return redirect(url_for("profile"))
 
 
-###############################     temporaire   ###################################################""
 @app.route('/Training') #, methods=['GET', 'POST']
 @login_required
 def training():
@@ -418,65 +417,61 @@ def training():
 
 
 
-@app.route('/MakeTestTraining')   ### cette page prépare le test : nombre d'images, prise au hasard des images
+@app.route('/MakeTestTraining')  
 @login_required
 def makeTestTraining():
-    #si c'est un refresh, refaire un test
     user=current_user
-    userTestFolder=user.trainingFolder
-    TestResult.query.filter_by(owner=user.id).delete()
-    #db.session.commit()
-    filenames = [ f for f in listdir(PATH_TO_TESTS+userTestFolder) if isfile(join(PATH_TO_TESTS+userTestFolder, f))]
-    random.shuffle(filenames)
-    strFiles=''
-    for k in filenames:
-        strFiles+=k
-        strFiles+="::"
-    
-    new_test = TestResult(images=strFiles, owner = user.id,result=""
-                        )
-    db.session.add(new_test)
-    db.session.commit()
-    ##test
-    #testResult=TestResult.query.filter_by(owner=user.id,testSent=False).first()
-    #images=testResult.images      ,images=images
-    return (render_template('makeTestTraining.html',strFiles=strFiles))
+    userTrainingFolder=user.trainingFolder
+    with open(join(PATH_TO_TRAINING_LISTS,userTrainingFolder)) as file:
+                text = file.read().rstrip()
+    ObjectList=text.split("::")
+    if "" in ObjectList:
+        ObjectList.remove("")
+    random.shuffle(ObjectList)
+    objectsStr=''
+    for k in ObjectList:
+        objectsStr+=k
+        objectsStr+="::"
+    return (render_template('makeTestTraining.html',objectsStr=objectsStr))
 
-@app.route('/testingTrain', methods=['POST'])
+
+@app.route('/testingTrain')  
 @login_required
-def testingTraining():
-    user = current_user
-    testResult= TestResult.query.filter_by(owner=user.id).first()
-    strFiles = request.form.get("strFiles")
-    if request.form.get("action"):
-        if request.form.get("action")=="correct":
-            #ici ajouter un 1 au test result 
-            testResult.result="1"+str(testResult.result)
-        else:
-            #et ici un 0
-            testResult.result="0"+str(testResult.result)
-        result=testResult.result
-    else:
-        #lancer un chrono
-        testResult.time=datetime.datetime.now()
-        result=""
-    db.session.commit()
-    chrono=testResult.time
-    filenames =strFiles.split("::")
-    nextPage="/testingTrain"
-    if len(filenames)==2:
-        nextPage="/profile"
+def testingTrain():
+    ObjectsStr=request.form.get('ObjectsStr')
+    ObjectList=ObjectsStr.split("::")
+    if "" in ObjectList:
+        ObjectList.remove("")
+    if len(ObjectList)==0:
         flash("entrainement terminé")
-    if filenames[-1]=="/":
-        filenames.pop()
-    imageTest=join(RELATIVE_PATH_TO_TESTS +user.trainingFolder, filenames.pop())
-    strFiles=""
-    for k in filenames:
-        strFiles+=k
-        strFiles+="::"
-    return(render_template('testing.html', imageTest=imageTest,strFiles=strFiles, nextPage=nextPage,result=result,chrono=chrono))
-
-###############################     temporaire   ###################################################
+        return(redirect(url_for('profile')))
+    else:
+        img=ObjectList[0]
+        ObjectList.remove(img)
+        objectsStr=''
+        for k in ObjectList:
+            objectsStr+=k
+            objectsStr+="::"
+        objectDir=PATH_TO_TRAINING_OBJECTS+img
+        relativeObjectDir=join(RELATIVE_PATH_TO_TRAINING_OBJECTS,img)
+        filenames = [ f for f in listdir(objectDir) if isfile(join(objectDir, f))]
+        for name in filenames:
+            if "image_" in name:
+                image_name=join(relativeObjectDir,name)
+            elif "ind1_" in name:
+                sonInd1=join(relativeObjectDir,name)
+            elif "ind2_" in name:
+                sonInd2=join(relativeObjectDir,name)
+            elif "final_" in name:
+                sonFinal=join(relativeObjectDir,name)
+            elif "indice1.txt" in name:
+                with open(join(objectDir,name)) as file:
+                    text1 = file.read().rstrip()
+            elif "indice2.txt" in name:
+                with open(join(objectDir,name)) as file:
+                    text2 = file.read().rstrip()
+        return (render_template('training.html',objectsStr=objectsStr,image_name=image_name,sonInd1=sonInd1, 
+                                                sonInd2=sonInd2,sonFinal=sonFinal,text1=text1,text2=text2))
 
 
 ######les taches de l'admin :

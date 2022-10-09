@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "header.html" %}
+</head>
+
+
+
+
+<body>
+
+  {% include "navbar.html" %}
+  {% include "errors.html" %}
+  <div class="ui center aligned segment" id="mainSegment"></div>
+    <div class="ui two column centered grid" id="mainContainer">
+        <div class="ui center aligned segment" id="mainSegment">
+        <div class="ui internally celled grid">
+            <div class="row">
+            <div class="eight wide column">
+                <div class="ui large header"> Que représente cette image ?</div>
+
+                    <img src="{{ image_name }}"height=600>
+
+
+            </div>
+            <div class="eight wide column">
+                <div class="ui large header"> Indices:</div>
+                <p> {{text1}}</p>
+                <audio controls >
+                    <source src="{{sonInd1}}" type="audio/mp3">
+                  Your browser does not support the audio element.
+                  </audio> 
+
+                  <p> {{text2}}</p>
+                <audio controls >
+                    <source src="{{sonInd2}}" type="audio/mp3">
+                  Your browser does not support the audio element.
+                  </audio> 
+
+                  <p> Réponse :</p>
+                  <audio controls >
+                      <source src="{{sonFinal}}" type="audio/mp3">
+                    Your browser does not support the audio element.
+                    </audio> 
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+      <form class="ui form" action='/testingTrain' method='POST'>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="hidden" name="objectsStr" value={{ objectsStr }}/>
+        <div class="ui two column centered grid" id="mainContainer">
+          <button class="ui submit green button" name='action' value="correct" type="submit">Bonne réponse</button>
+          <button class="ui submit grey button" name='action' value= "faux" type="submit">Réponse non trouvée</button>
+        </div>
+      </form>
+    </div>
+    </div>
+  </div>  {% include "footer.html" %}
+</body>
+
+
+</html>
