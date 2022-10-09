@@ -381,9 +381,12 @@ def viewTests():
     folderList=[]
     for k in links:
         folderList.append(k.removeprefix(PATH_TO_TESTS))
+    trainingList = [ f for f in listdir(PATH_TO_TRAINING_LISTS) if isfile(join(PATH_TO_TRAINING_LISTS, f))]
     if "" in folderList:
         folderList.remove("")
-    return (render_template('viewTests.html', folderList=folderList))
+    if "" in trainingList:
+        trainingList.remove("")
+    return (render_template('viewTests.html', folderList=folderList,trainingList=trainingList))
 
 
 

@@ -24,9 +24,9 @@
   </select><br>
   <select name="training">
     <option value="">--Choisir l'entrainement--</option>
-  {% for folder in folderList %}
+  {% for training in trainingList %}
 
-  <option value={{folder}}>{{folder}}</option>
+  <option value={{folder}}>{{training}}</option>
   {% endfor %}
 </select><br>
   <input type="password" name="password" placeholder="Password">
