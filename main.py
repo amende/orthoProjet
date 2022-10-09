@@ -423,10 +423,12 @@ def makeTestTraining():
     user=current_user
     userTrainingFolder=user.trainingFolder
     with open(join(PATH_TO_TRAINING_LISTS,userTrainingFolder)) as file:
-                text = file.read().rstrip()
+                text = file.readline()
     ObjectList=text.split("::")
     if "" in ObjectList:
         ObjectList.remove("")
+    if ObjectList[-1]=="/":
+        ObjectList.pop()
     random.shuffle(ObjectList)
     objectsStr=''
     for k in ObjectList:
@@ -442,6 +444,8 @@ def testingTrain():
     ObjectList=ObjectsStr.split("::")
     if "" in ObjectList:
         ObjectList.remove("")
+    if ObjectList[-1]=="/":
+        ObjectList.pop()
     if len(ObjectList)==0:
         flash("entrainement terminé")
         return(redirect(url_for('profile')))
