@@ -48,6 +48,7 @@ app.config['UPLOAD_FOLDER'] ='./static/images/upload/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif','mpeg','mp3'}
 
 # CSP Policy
+"""
 csp = {
     'default-src': '\'self\' data:',
     'script-src': '\'self\'',
@@ -55,7 +56,7 @@ csp = {
     'font-src': '\'self\' data: fonts.gstatic.com/',
 }
 Talisman(app, content_security_policy=csp, content_security_policy_nonce_in=['style-src', 'script-src'])
-
+"""
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
