@@ -441,7 +441,7 @@ def makeTestTraining():
 @login_required
 def testingTrain():
     objectsStr=request.form.get("objectsStr")
-    objectsStr=objectsStr.split("::")
+    objectList=objectsStr.split("::")
     if "" in objectList:
         objectList.remove("")
     if "/" in objectList:
