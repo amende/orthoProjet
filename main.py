@@ -440,8 +440,8 @@ def makeTestTraining():
 @app.route('/testingTrain', methods=['POST'])  
 @login_required
 def testingTrain():
-    ObjectsStr2=request.form.get('ObjectsStr')
-    ObjectsStr1=str(request.form.get('ObjectsStr'))
+    ObjectsStr2=request.form.get("ObjectsStr")
+    ObjectsStr1=str(request.form.get("ObjectsStr"))
     return(render_template("print.html",ObjectsStr1=ObjectsStr1,ObjectsStr2=ObjectsStr2))
     ObjectList=ObjectsStr.split("::")
     if "" in ObjectList:
