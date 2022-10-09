@@ -435,7 +435,7 @@ def makeTestTraining():
     return (render_template('makeTestTraining.html',objectsStr=objectsStr))
 
 
-@app.route('/testingTrain')  
+@app.route('/testingTrain', methods=['POST'])  
 @login_required
 def testingTrain():
     ObjectsStr=request.form.get('ObjectsStr')
