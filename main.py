@@ -456,8 +456,8 @@ def testingTrain():
         for k in ObjectList:
             objectsStr+=k
             objectsStr+="::"
-        objectDir=PATH_TO_TRAINING_OBJECTS+img
-        relativeObjectDir=join(RELATIVE_PATH_TO_TRAINING_OBJECTS,img)
+        objectDir=PATH_TO_TRAINING_OBJECTS+str(img)
+        relativeObjectDir=join(RELATIVE_PATH_TO_TRAINING_OBJECTS,str(img))
         filenames = [ f for f in listdir(objectDir) if isfile(join(objectDir, f))]
         for name in filenames:
             if "image_" in name:
