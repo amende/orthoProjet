@@ -637,7 +637,7 @@ def createTraining_post():
     if current_user.email != ADMIN_MAIL:
         return redirect(url_for('profile'))
     nameList=""
-    for name,value in request.form.to_dict():
+    for name in request.form:
         if name=="trainingName":
             trainingName=name
         else:
