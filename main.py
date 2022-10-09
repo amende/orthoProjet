@@ -451,7 +451,7 @@ def testingTrain():
         return(redirect(url_for('profile')))
     else:
         img=str(objectList[0])
-        objectsStr.remove(img)
+        objectList.remove(img)
         objectsStr=''
         for k in objectList:
             objectsStr+=k
