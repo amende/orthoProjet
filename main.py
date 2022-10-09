@@ -444,8 +444,8 @@ def testingTrain():
     ObjectList=ObjectsStr.split("::")
     if "" in ObjectList:
         ObjectList.remove("")
-    if ObjectList[-1]=="/":
-        ObjectList.pop()
+    if "/" in ObjectList:
+        ObjectList.remove("/")
     if len(ObjectList)==0:
         flash("entrainement terminé")
         return(redirect(url_for('profile')))
@@ -456,7 +456,7 @@ def testingTrain():
         for k in ObjectList:
             objectsStr+=k
             objectsStr+="::"
-        objectDir=PATH_TO_TRAINING_OBJECTS+str(img)
+        objectDir=join(PATH_TO_TRAINING_OBJECTS,str(img))
         relativeObjectDir=join(RELATIVE_PATH_TO_TRAINING_OBJECTS,str(img))
         filenames = [ f for f in listdir(objectDir) if isfile(join(objectDir, f))]
         for name in filenames:
