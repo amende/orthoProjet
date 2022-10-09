@@ -425,11 +425,11 @@ def makeTestTraining():
     with open(join(PATH_TO_TRAINING_LISTS,userTrainingFolder)) as file:
                 text = file.readline()
     ObjectList=text.split("::")
+    random.shuffle(ObjectList)
     if "" in ObjectList:
         ObjectList.remove("")
-    if ObjectList[-1]=="/":
-        ObjectList.pop()
-    random.shuffle(ObjectList)
+    if "/" in ObjectList:
+        ObjectList.remove("/")
     objectsStr=''
     for k in ObjectList:
         objectsStr+=k
