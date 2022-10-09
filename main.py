@@ -440,7 +440,7 @@ def makeTestTraining():
 @app.route('/testingTrain', methods=['POST'])  
 @login_required
 def testingTrain():
-    ObjectsStr=request.form.get('ObjectsStr')
+    ObjectsStr=str(request.form.get('ObjectsStr'))
     ObjectList=ObjectsStr.split("::")
     if "" in ObjectList:
         ObjectList.remove("")
