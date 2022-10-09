@@ -639,8 +639,8 @@ def createTraining_post():
     nameList=""
     for name in request.form:
         if name=="trainingName":
-            trainingName=name
-        else:
+            trainingName=request.form.get(name)
+        elif name!="csrf_token":
             nameList+=name+"::"
     with open(os.path.join(PATH_TO_TRAINING_LISTS, trainingName), 'w') as f:
             f.write(nameList)
