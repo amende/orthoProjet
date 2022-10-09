@@ -13,16 +13,24 @@
   <div class="ui large header">Bonjour, {{current_user.name}}</div>
   <div class="ui large header"><br>
     <p> Veuillez choisir les différents objets dans l'entrainement</p><br>
-    <form action="/SetTest" method='POST'>
+    <form action="/CreateTraining" method='POST'>
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <p>
+        <label for="trainingName">
+          Choisir le nom de votre entrainement :
+        </label>
+        <input type="text" name="trainingName"  >
+      </p>
     {% for name in dirNames %}
-
-    <input type="checkbox"  name="{{name}}" checked>
+        <div>
+    <input type="checkbox"  name="{{name}}" value="{{name}}">
       <label for="{{name}}">{{name}}</label>
+    </div>
+    <br>
   {% endfor %}
 <br>
   <input type="password" name="password" placeholder="Password">
-  <button class="ui submit red button" type="submit">Choisir ce test</button>
+  <button class="ui submit red button" type="submit">Créer cet entrainement</button>
 </form>
     </div>
     </div>

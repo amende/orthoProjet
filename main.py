@@ -22,6 +22,7 @@ load_dotenv()
 PATH_TO_TESTS="/home/100mots/orthoProjet/static/images/tests/"
 
 PATH_TO_TRAINING_OBJECTS="/home/100mots/orthoProjet/static/images/Training/Objects/"
+PATH_TO_TRAINING_LISTS="/home/100mots/orthoProjet/static/images/Training/lists/"
 RELATIVE_PATH_TO_TRAINING_OBJECTS="/static/images/Training/Objects/"
 RELATIVE_PATH_TO_TESTS="/static/images/tests/"
 debug = "TRUE"
@@ -472,7 +473,7 @@ def testingTraining():
         strFiles+="::"
     return(render_template('testing.html', imageTest=imageTest,strFiles=strFiles, nextPage=nextPage,result=result,chrono=chrono))
 
-###############################     temporaire   ###################################################""
+###############################     temporaire   ###################################################
 
 
 ######les taches de l'admin :
@@ -629,6 +630,25 @@ def createTraining():
     dirNames=[ f for f in listdir(PATH_TO_TRAINING_OBJECTS) if isdir(join(PATH_TO_TRAINING_OBJECTS, f))]
     return(render_template("createTraining.html",dirNames=dirNames))
 
+
+@app.route('/CreateTraining',methods=["POST"])
+@login_required
+def createTraining_post():
+    if current_user.email != ADMIN_MAIL:
+        return redirect(url_for('profile'))
+    nameList=""
+    for name,value in request.POST.items():
+        if name=="trainingName":
+            trainingName=name
+        else:
+            nameList+=name+"::"
+    with open(os.path.join(PATH_TO_TRAINING_LISTS, trainingName), 'w') as f:
+            f.write(nameList)
+    flash("entrainement créé !")
+    return redirect(url_for("profile"))
+    
+    
+    
 ########################################################################################################################################################
 
 #ancien code !!!!
