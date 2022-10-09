@@ -4,7 +4,7 @@
   {% include "header.html" %}
 </head>
 
-<script>
+<script nonce="{{ csp_nonce() }}">
     var ind1 = document.getElementById("ind1");
     function play_Audio1() {
         ind1.play();
@@ -43,14 +43,14 @@
             <div class="eight wide column">
                 <div class="ui large header"> Indices:</div>
                 <p> {{text1}}</p>
-                <audio id="ind1" >
+                <audio id="ind1" preload="auto">
                     <source src="{{sonInd1}}" type="audio/mp3">
                   Your browser does not support the audio element.
                   </audio> 
                   <button onclick="play_Audio1()" type="button">Ecouter l'indice 1</button>
                   <br>
                   <p> {{text2}}</p>
-                <audio id="ind2" >
+                <audio id="ind2" preload="auto">
                     <source src="{{sonInd2}}" type="audio/mp3">
                   Your browser does not support the audio element.
                   </audio> 
@@ -58,7 +58,7 @@
                   <button onclick="play_Audio2()" type="button">Ecouter l'indice 2</button>
                       <br>
                   <p> Réponse :</p>
-                  <audio id="final" >
+                  <audio id="final" preload="auto">
                       <source src="{{sonFinal}}" type="audio/mp3">
                     Your browser does not support the audio element.
                     </audio> 
