@@ -31,42 +31,31 @@
                   Your browser does not support the audio element.
                   </audio> 
                   <button onclick="play_Audio1()" type="button">Ecouter l'indice 1</button>
-
-                  <script>
-                    var ind1 = document.getElementById("ind1");
-             
-                    function play_Audio1() {
-                        ind1.play();
-                    }
-             
-                    
-                </script>
                   <br>
                   <p> {{text2}}</p>
                 <audio id="ind2" >
                     <source src="{{sonInd2}}" type="audio/mp3">
                   Your browser does not support the audio element.
                   </audio> 
-                  
-                  
-                  <button onclick="play_Audio2()" type="button">Play Audio</button>
-                  <script>
-                    var ind2 = document.getElementById("ind2");
-             
-                    function play_Audio2() {
-                        ind2.play();
-                    }
-             
-                    
-                </script>
-                  <br>
+
+                  <button onclick="play_Audio2()" type="button">Ecouter l'indice 2</button>
+                      <br>
                   <p> Réponse :</p>
                   <audio id="final" >
                       <source src="{{sonFinal}}" type="audio/mp3">
                     Your browser does not support the audio element.
                     </audio> 
-                    <button onclick="play_Audio3()" type="button">Play Audio</button>
+                    <button onclick="play_Audio3()" type="button">Ecouter la réponse</button>
                     <script>
+                        var ind1 = document.getElementById("ind1");
+                        function play_Audio1() {
+                            ind1.play();
+                        }
+                        var ind2 = document.getElementById("ind2");
+                
+                        function play_Audio2() {
+                            ind2.play();
+                        }
                         var final = document.getElementById("final");
                  
                         function play_Audio3() {
