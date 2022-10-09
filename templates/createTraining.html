@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "header.html" %}
+</head>
+
+<body>
+
+  {% include "navbar.html" %}
+  {% include "errors.html" %}
+
+  <div class="ui center aligned segment" id="mainSegment">
+  <div class="ui large header">Bonjour, {{current_user.name}}</div>
+  <div class="ui large header"><br>
+    <p> Veuillez choisir les différents objets dans l'entrainement</p><br>
+    <form action="/SetTest" method='POST'>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    {% for name in dirNames %}
+
+    <input type="checkbox"  name="{{name}}" checked>
+      <label for="{{name}}">{{name}}</label>
+  {% endfor %}
+<br>
+  <input type="password" name="password" placeholder="Password">
+  <button class="ui submit red button" type="submit">Choisir ce test</button>
+</form>
+    </div>
+    </div>
+  {% include "footer.html" %}
+</body>
+</html>

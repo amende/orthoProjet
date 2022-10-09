@@ -4,7 +4,7 @@ from flask_talisman import Talisman
 from dotenv import load_dotenv
 from flask_wtf.csrf import CSRFProtect
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile, join, isdir
 import bcrypt
 import random
 import string
@@ -619,6 +619,15 @@ def viewBlitz():
                 text2 = file.read().rstrip()
     return(render_template('blitz.html', image_name=image_name,sonInd1=sonInd1, 
                                                 sonInd2=sonInd2,sonFinal=sonFinal,text1=text1,text2=text2))
+
+
+@app.route('/CreateTraining')
+@login_required
+def createTraining():
+    if current_user.email != ADMIN_MAIL:
+        return redirect(url_for('profile'))
+    dirNames=[ f for f in listdir(PATH_TO_TRAINING_OBJECTS) if isdir(join(PATH_TO_TRAINING_OBJECTS, f))]
+    return(render_template("createTraining.html",dirNames=dirNames))
 
 ########################################################################################################################################################
 
