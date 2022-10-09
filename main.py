@@ -424,14 +424,14 @@ def makeTestTraining():
     userTrainingFolder=user.trainingFolder
     with open(join(PATH_TO_TRAINING_LISTS,userTrainingFolder)) as file:
                 text = file.readline()
-    ObjectList=text.split("::")
-    random.shuffle(ObjectList)
-    if "" in ObjectList:
-        ObjectList.remove("")
-    if "/" in ObjectList:
-        ObjectList.remove("/")
+    objectList=text.split("::")
+    random.shuffle(objectList)
+    if "" in objectList:
+        objectList.remove("")
+    if "/" in objectList:
+        objectList.remove("/")
     objectsStr=''
-    for k in ObjectList:
+    for k in objectList:
         objectsStr+=k
         objectsStr+="::"
     return (render_template('makeTestTraining.html',objectsStr=objectsStr))
@@ -440,22 +440,20 @@ def makeTestTraining():
 @app.route('/testingTrain', methods=['POST'])  
 @login_required
 def testingTrain():
-    ObjectsStr2=request.form.get("ObjectsStr")
-    ObjectsStr1=str(request.form.get("ObjectsStr"))
-    return(render_template("print.html",ObjectsStr1=ObjectsStr1,ObjectsStr2=ObjectsStr2))
-    ObjectList=ObjectsStr.split("::")
-    if "" in ObjectList:
-        ObjectList.remove("")
-    if "/" in ObjectList:
-        ObjectList.remove("/")
-    if len(ObjectList)==0:
+    objectsStr=request.form.get("objectsStr")
+    objectsStr=objectsStr.split("::")
+    if "" in objectList:
+        objectList.remove("")
+    if "/" in objectList:
+        objectList.remove("/")
+    if len(objectList)==0:
         flash("entrainement terminé")
         return(redirect(url_for('profile')))
     else:
-        img=str(ObjectList[0])
-        ObjectList.remove(img)
+        img=str(objectList[0])
+        objectsStr.remove(img)
         objectsStr=''
-        for k in ObjectList:
+        for k in objectList:
             objectsStr+=k
             objectsStr+="::"
         objectDir=join(PATH_TO_TRAINING_OBJECTS,str(img))
