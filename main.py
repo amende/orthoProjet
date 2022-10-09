@@ -450,7 +450,7 @@ def testingTrain():
         flash("entrainement terminé")
         return(redirect(url_for('profile')))
     else:
-        img=ObjectList[0]
+        img=str(ObjectList[0])
         ObjectList.remove(img)
         objectsStr=''
         for k in ObjectList:
