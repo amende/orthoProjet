@@ -45,7 +45,7 @@
                     Your browser does not support the audio element.
                     </audio> 
                     <button onclick="play_Audio3()" type="button">Ecouter la réponse</button>
-                    <p id="mot_suivant"></p>
+                    <h4 id="mot_suivant"></h4>
                     <br>
                     <script nonce="{{ csp_nonce() }}" language='javascript'>
                         var ind1 = document.getElementById("ind1");
@@ -61,7 +61,7 @@
                     
                         function play_Audio3() {
                             final.play();
-                            document.getElementById("mot_suivant").innerHTML ="{{le_mot}}";
+                            document.getElementById("mot_suivant").innerHTML ="<br><br>{{le_mot}}<br><br>";
                         }
                     
                         
