@@ -477,7 +477,13 @@ def testingTrain():
             elif "indice2.txt" in name:
                 with open(join(objectDir,name)) as file:
                     text2 = file.read().rstrip()
-        return (render_template('training.html',objectsStr=objectsStr,image_name=image_name,sonInd1=sonInd1, 
+        le_mot=""
+        for k in str(img):
+            if k =="_":
+                le_mot+=" "
+            else:
+                le_mot+=k.upper()
+        return (render_template('training.html',le_mot=le_mot,objectsStr=objectsStr,image_name=image_name,sonInd1=sonInd1, 
                                                 sonInd2=sonInd2,sonFinal=sonFinal,text1=text1,text2=text2))
 
 
